@@ -47,11 +47,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 857073403, guid: 0e1b96f8f004c72429a815474cbf40cf, type: 3}
   hitbox: {fileID: 5443906228035942706}
-  target: {fileID: 0}
-  speed: 2
+  lane: {fileID: 0}
+  startTileIndex: 7
+  moveInterval: 1.25
   health: 2
   attack: 1
-  spriteOffset: 1
+  spriteOffset: 1.8
 --- !u!1 &9207595136345071695
 GameObject:
   m_ObjectHideFlags: 0
@@ -79,7 +80,7 @@ Transform:
   m_GameObject: {fileID: 9207595136345071695}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 1.8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -178,7 +179,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.54, y: 2.046}
+    oldSize: {x: 2.5666666, y: 3.4099998}
     newSize: {x: 1.54, y: 2.046}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
