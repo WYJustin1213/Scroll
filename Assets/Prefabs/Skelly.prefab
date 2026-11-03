@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3306058306074137091}
   - component: {fileID: 5803857351602912821}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Skelly
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6f927ab0c294ce9abe4e86a2aab8ee0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sprite: {fileID: 857073403, guid: 0e1b96f8f004c72429a815474cbf40cf, type: 3}
+  sprite: {fileID: -131304428, guid: fe210c9c604974b75b195bc17bbee4e4, type: 3}
   hitbox: {fileID: 5443906228035942706}
   lane: {fileID: 0}
   startTileIndex: 7
@@ -64,7 +64,7 @@ GameObject:
   - component: {fileID: 1331382697601512686}
   - component: {fileID: 3365292584433713735}
   - component: {fileID: 5443906228035942706}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -130,7 +130,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 857073403, guid: 0e1b96f8f004c72429a815474cbf40cf, type: 3}
+  m_Sprite: {fileID: -131304428, guid: fe210c9c604974b75b195bc17bbee4e4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -179,7 +179,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.5666666, y: 3.4099998}
+    oldSize: {x: 5, y: 5}
     newSize: {x: 1.54, y: 2.046}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

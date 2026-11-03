@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3306058306074137091}
   - component: {fileID: 5803857351602912821}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: FrostySkelly
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6f927ab0c294ce9abe4e86a2aab8ee0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sprite: {fileID: 1288992968, guid: f05f3c56ceef2d64b82a03ee6010fd76, type: 3}
+  sprite: {fileID: 813974550, guid: b2c61ff0bba60498fa39982ec8912c4c, type: 3}
   hitbox: {fileID: 4181968730304972749}
   lane: {fileID: 0}
   startTileIndex: 7
@@ -64,7 +64,7 @@ GameObject:
   - component: {fileID: 1331382697601512686}
   - component: {fileID: 3365292584433713735}
   - component: {fileID: 4181968730304972749}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -130,7 +130,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1288992968, guid: f05f3c56ceef2d64b82a03ee6010fd76, type: 3}
+  m_Sprite: {fileID: 813974550, guid: b2c61ff0bba60498fa39982ec8912c4c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -179,7 +179,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.66, y: 3.52}
+    oldSize: {x: 4, y: 4}
     newSize: {x: 1.54, y: 2.046}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

@@ -110,13 +110,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: IMG_4237_4
+      name: IMG_4237_0
       rect:
         serializedVersion: 2
-        x: 231
-        y: 20
-        width: 584
-        height: 553
+        x: 0
+        y: 0
+        width: 1000
+        height: 1000
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -125,8 +125,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e5c0aead9538c464a80c29e522e15abb
-      internalID: -1562714905
+      spriteID: 012a96ce2db7bbb44b3b1876e457f755
+      internalID: 1970169867
       vertices: []
       indices: 
       edges: []
@@ -146,10 +146,6 @@ TextureImporter:
       entries: []
     nameFileIdTable:
       IMG_4237_0: 1970169867
-      IMG_4237_1: 275145972
-      IMG_4237_2: 25434536
-      IMG_4237_3: 1662166720
-      IMG_4237_4: -1562714905
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

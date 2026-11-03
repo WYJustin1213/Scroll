@@ -16,11 +16,26 @@ public class LaneTestEnemy : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private LaneTile currentTile;
     private float moveTimer;
+    private bool dead;
 
     public int Health => health;
     public float Attack => attack;
     public LaneManager Lane => lane;
     public LaneTile CurrentTile => currentTile;
+    public bool IsDead => dead;
+
+    public void TakeDamage(int amount)
+    {
+        if (dead || amount <= 0)
+            return;
+
+        health = Mathf.Max(0, health - amount);
+        if (health == 0)
+        {
+            dead = true;
+            Destroy(gameObject);
+        }
+    }
 
     private void OnEnable()
     {
