@@ -881,8 +881,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Enter text...
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c2a21198f63ed417ebd20236840db6b2, type: 2}
+  m_sharedMaterial: {fileID: -62081284080276878, guid: c2a21198f63ed417ebd20236840db6b2, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2090,8 +2090,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 3.2019, y: 66.913}
-  m_SizeDelta: {x: 3288.6, y: 205.39}
+  m_AnchoredPosition: {x: 6.2089, y: 174}
+  m_SizeDelta: {x: 3181.6, y: 205.39}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &474433052
 MonoBehaviour:
@@ -2184,7 +2184,7 @@ MonoBehaviour:
   m_CaretWidth: 1
   m_ReadOnly: 0
   m_RichText: 1
-  m_GlobalFontAsset: {fileID: 0}
+  m_GlobalFontAsset: {fileID: 11400000, guid: c2a21198f63ed417ebd20236840db6b2, type: 2}
   m_OnFocusSelectAll: 1
   m_ResetOnDeActivation: 1
   m_KeepTextSelectionVisible: 0
@@ -2447,7 +2447,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -503, y: 465.47205}
+  m_AnchoredPosition: {x: -503, y: 572.559}
   m_SizeDelta: {x: 424.5, y: 151.94}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &572075836
@@ -4484,7 +4484,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1.698, y: -763.91327}
+  m_AnchoredPosition: {x: -1.698, y: -807}
   m_SizeDelta: {x: 3775.507, y: 1238.209}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1035662340
@@ -4980,6 +4980,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3365292584433713735, guid: c037e7226f485a84a80cf5aaeceb4f10, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 1970169867, guid: 37bbc1eb4ab27f644bb5e85501c7d975, type: 3}
     - target: {fileID: 3731198077307927349, guid: c037e7226f485a84a80cf5aaeceb4f10, type: 3}
       propertyPath: m_Name
       value: BombSkelly
@@ -4999,6 +5003,10 @@ PrefabInstance:
     - target: {fileID: 4754310565374250147, guid: c037e7226f485a84a80cf5aaeceb4f10, type: 3}
       propertyPath: m_Offset.y
       value: 0.95
+      objectReference: {fileID: 0}
+    - target: {fileID: 5307638643546856979, guid: c037e7226f485a84a80cf5aaeceb4f10, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5423227922252336442, guid: c037e7226f485a84a80cf5aaeceb4f10, type: 3}
       propertyPath: m_Size.x
@@ -5729,7 +5737,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -2040.3, y: 469}
+  m_AnchoredPosition: {x: -2040.3, y: 576.087}
   m_SizeDelta: {x: 2864.055, y: 144.888}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1393835928
@@ -5754,8 +5762,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Status
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c2a21198f63ed417ebd20236840db6b2, type: 2}
+  m_sharedMaterial: {fileID: -62081284080276878, guid: c2a21198f63ed417ebd20236840db6b2, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -6771,8 +6779,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Execute
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c2a21198f63ed417ebd20236840db6b2, type: 2}
+  m_sharedMaterial: {fileID: -62081284080276878, guid: c2a21198f63ed417ebd20236840db6b2, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -7386,6 +7394,10 @@ PrefabInstance:
       propertyPath: m_Offset.y
       value: 0.95
       objectReference: {fileID: 0}
+    - target: {fileID: 5307638643546856979, guid: c037e7226f485a84a80cf5aaeceb4f10, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 5423227922252336442, guid: c037e7226f485a84a80cf5aaeceb4f10, type: 3}
       propertyPath: m_Size.x
       value: 0.8
@@ -7864,8 +7876,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u200B"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c2a21198f63ed417ebd20236840db6b2, type: 2}
+  m_sharedMaterial: {fileID: -62081284080276878, guid: c2a21198f63ed417ebd20236840db6b2, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
