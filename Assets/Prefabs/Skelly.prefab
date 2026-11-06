@@ -45,14 +45,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6f927ab0c294ce9abe4e86a2aab8ee0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sprite: {fileID: -131304428, guid: fe210c9c604974b75b195bc17bbee4e4, type: 3}
+  definition: {fileID: 11400000, guid: 7c2d9e41b8a54f0d9e6a1b3c5d7f8a01, type: 2}
   hitbox: {fileID: 5443906228035942706}
   lane: {fileID: 0}
   startTileIndex: 7
-  moveInterval: 1.25
-  health: 2
-  attack: 1
-  spriteOffset: 1.8
 --- !u!1 &9207595136345071695
 GameObject:
   m_ObjectHideFlags: 0

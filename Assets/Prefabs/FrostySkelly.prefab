@@ -45,14 +45,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6f927ab0c294ce9abe4e86a2aab8ee0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sprite: {fileID: 813974550, guid: b2c61ff0bba60498fa39982ec8912c4c, type: 3}
+  definition: {fileID: 11400000, guid: 7c2d9e41b8a54f0d9e6a1b3c5d7f8a03, type: 2}
   hitbox: {fileID: 4181968730304972749}
   lane: {fileID: 0}
   startTileIndex: 7
-  moveInterval: 1
-  health: 10
-  attack: 1
-  spriteOffset: 1.85
 --- !u!1 &9207595136345071695
 GameObject:
   m_ObjectHideFlags: 0
@@ -80,7 +76,7 @@ Transform:
   m_GameObject: {fileID: 9207595136345071695}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.85, z: 0}
+  m_LocalPosition: {x: 0, y: 2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

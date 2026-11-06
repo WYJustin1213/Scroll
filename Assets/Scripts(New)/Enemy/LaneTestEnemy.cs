@@ -4,22 +4,22 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class LaneTestEnemy : MonoBehaviour
 {
-    [SerializeField] private Sprite sprite;
+    [SerializeField] private EnemyDefinition definition;
     [SerializeField] private BoxCollider2D hitbox;
     [SerializeField] private LaneManager lane;
     [SerializeField, Min(0)] private int startTileIndex;
-    [SerializeField, Min(0.01f)] private float moveInterval = 1f;
-    [SerializeField, Min(1)] private int health = 10;
-    [SerializeField, Min(0f)] private float attack = 1f;
-    [SerializeField] private float spriteOffset = 1.1f;
 
     private SpriteRenderer spriteRenderer;
     private LaneTile currentTile;
     private float moveTimer;
     private bool dead;
+    private int currentHealth;
+    private bool healthInitialized;
 
-    public int Health => health;
-    public float Attack => attack;
+    public EnemyDefinition Definition => definition;
+    public int Health => healthInitialized ? currentHealth : (definition != null ? definition.Health : 0);
+    public float Attack => definition != null ? definition.Attack : 0f;
+    public int Drop => definition != null ? definition.Drop : 0;
     public LaneManager Lane => lane;
     public LaneTile CurrentTile => currentTile;
     public bool IsDead => dead;
@@ -29,8 +29,9 @@ public class LaneTestEnemy : MonoBehaviour
         if (dead || amount <= 0)
             return;
 
-        health = Mathf.Max(0, health - amount);
-        if (health == 0)
+        currentHealth = Mathf.Max(0, Health - amount);
+        healthInitialized = true;
+        if (currentHealth == 0)
         {
             dead = true;
             Destroy(gameObject);
@@ -62,11 +63,14 @@ public class LaneTestEnemy : MonoBehaviour
         if (!Application.isPlaying || lane == null || currentTile == null)
             return;
 
-        moveTimer += Time.deltaTime;
-        if (moveTimer < moveInterval)
+        if (definition == null)
             return;
 
-        moveTimer -= moveInterval;
+        moveTimer += Time.deltaTime;
+        if (moveTimer < definition.MoveInterval)
+            return;
+
+        moveTimer -= definition.MoveInterval;
         LaneTile next = lane.GetNextTile(currentTile);
         if (next == null)
             return;
@@ -108,7 +112,7 @@ public class LaneTestEnemy : MonoBehaviour
             changed = true;
         }
 
-        visual.localPosition = Vector3.up * spriteOffset;
+        visual.localPosition = Vector3.up * (definition != null ? definition.SpriteOffset : 0f);
         return changed;
     }
 
@@ -117,7 +121,7 @@ public class LaneTestEnemy : MonoBehaviour
         if (spriteRenderer == null)
             return;
 
-        spriteRenderer.sprite = sprite;
+        spriteRenderer.sprite = definition != null ? definition.Sprite : null;
     }
 
     private static void DestroyOwnedObject(Object ownedObject)
