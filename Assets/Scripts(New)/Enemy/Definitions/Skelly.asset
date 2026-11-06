@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b1e7c0d2a4f4e6a9c3d8f1b7e2a6c40, type: 3}
   m_Name: Skelly
   m_EditorClassIdentifier: 
-  sprite: {fileID: 857073403, guid: 0e1b96f8f004c72429a815474cbf40cf, type: 3}
+  sprite: {fileID: -1416107998, guid: fe210c9c604974b75b195bc17bbee4e4, type: 3}
   moveInterval: 1.25
   health: 2
   attack: 1
   drop: 1
-  spriteOffset: 1.9
+  spriteOffset: 2.11
+  manaPrefab: {fileID: 2886999126242463011, guid: 368b047b88e594b34a28f20da6f95b08, type: 3}
+  manaAmount: 1

@@ -8,15 +8,12 @@ public class LaneSpellInput : MonoBehaviour
     [Header("References")]
     [SerializeField] private TMP_InputField inputField;
     [SerializeField] private LaneSpellController spellController;
+    [SerializeField] private SpellDatabase spellDatabase;
     [Tooltip("Lanes that can be targeted. Filled from the scene if left empty.")]
     [SerializeField] private List<LaneSpellPoint> lanes = new List<LaneSpellPoint>();
 
-    [Header("Fireball Command")]
-    [Tooltip("Typing this word followed by a lane name casts the spell, e.g. \"Fireball Lane 1\". A \"+\" between them is also accepted.")]
-    [SerializeField] private string fireballKeyword = "Fireball";
-
     [Header("Behavior")]
-    [Tooltip("Cast as soon as the typed text matches a command. Avoid lane names that start with another lane's name (e.g. \"Lane 1\" and \"Lane 10\") when this is on.")]
+    [Tooltip("Cast as soon as the typed text matches a spell and lane.")]
     [SerializeField] private bool castWhenTyped = true;
     [SerializeField] private bool castOnSubmit = true;
     [SerializeField] private bool clearAfterCast = true;
@@ -29,8 +26,14 @@ public class LaneSpellInput : MonoBehaviour
         if (lanes.Count == 0)
         {
             lanes.AddRange(FindObjectsByType<LaneSpellPoint>(FindObjectsSortMode.None));
-            lanes.Sort((a, b) => string.CompareOrdinal(a.LaneName, b.LaneName));
         }
+
+        lanes.Sort((a, b) =>
+        {
+            string aName = a != null ? CommandTextNormalizer.Normalize(a.LaneName) : string.Empty;
+            string bName = b != null ? CommandTextNormalizer.Normalize(b.LaneName) : string.Empty;
+            return bName.Length.CompareTo(aName.Length);
+        });
     }
 
     private void OnEnable()
@@ -65,7 +68,13 @@ public class LaneSpellInput : MonoBehaviour
 
     private bool TryCast(string text)
     {
-        if (!TryFindLane(text, out LaneSpellPoint point))
+        if (spellDatabase == null)
+        {
+            Debug.LogError("LaneSpellInput needs a SpellDatabase.", this);
+            return false;
+        }
+
+        if (!TryFindSpellAndLane(text, out SpellDefinition spell, out LaneSpellPoint point))
             return false;
 
         if (spellController == null)
@@ -74,40 +83,72 @@ public class LaneSpellInput : MonoBehaviour
             return false;
         }
 
-        if (!spellController.CastFireball(point))
+        if (!spellController.CastSpell(spell, point))
             return false;
 
         if (clearAfterCast)
-        {
-            inputField.text = string.Empty;
-            inputField.ActivateInputField();
-        }
+            inputField.SetTextWithoutNotify(string.Empty);
 
         return true;
     }
 
-    private bool TryFindLane(string text, out LaneSpellPoint match)
+    private bool TryFindSpellAndLane(
+        string text,
+        out SpellDefinition spell,
+        out LaneSpellPoint match)
     {
+        spell = null;
         match = null;
 
-        string typed = LaneSpellPoint.Normalize(text);
-        string keyword = LaneSpellPoint.Normalize(fireballKeyword);
-        if (keyword.Length == 0 || !typed.StartsWith(keyword))
-            return false;
-
-        string laneText = LaneSpellPoint.Normalize(typed.Substring(keyword.Length).TrimStart('+', ' '));
-        if (laneText.Length == 0)
-            return false;
+        string typed = NormalizeInput(text);
 
         for (int i = 0; i < lanes.Count; i++)
         {
-            if (lanes[i] != null && lanes[i].MatchesName(laneText))
+            LaneSpellPoint lane = lanes[i];
+            if (lane == null)
+                continue;
+
+            string laneName = CommandTextNormalizer.Normalize(lane.LaneName);
+            if (laneName.Length == 0 ||
+                !TryGetSpellText(typed, laneName, out string spellText))
+                continue;
+
+            if (spellDatabase.TryFindSpell(spellText, out spell))
             {
-                match = lanes[i];
+                match = lane;
                 return true;
             }
         }
 
         return false;
+    }
+
+    private static bool TryGetSpellText(string input, string laneName, out string spellText)
+    {
+        string spaceSuffix = " " + laneName;
+        string plusSuffix = "+" + laneName;
+
+        if (input.EndsWith(spaceSuffix))
+        {
+            spellText = input.Substring(0, input.Length - spaceSuffix.Length).Trim();
+            return spellText.Length > 0;
+        }
+
+        if (input.EndsWith(plusSuffix))
+        {
+            spellText = input.Substring(0, input.Length - plusSuffix.Length).Trim();
+            return spellText.Length > 0;
+        }
+
+        spellText = string.Empty;
+        return false;
+    }
+
+    private static string NormalizeInput(string text)
+    {
+        return CommandTextNormalizer.Normalize(text)
+            .Replace(" + ", "+")
+            .Replace(" +", "+")
+            .Replace("+ ", "+");
     }
 }

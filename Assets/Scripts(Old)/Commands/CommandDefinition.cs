@@ -41,6 +41,6 @@ public class CommandDefinition : ScriptableObject
             }
         }
 
-        return false;
+        return false; 
     }
 }

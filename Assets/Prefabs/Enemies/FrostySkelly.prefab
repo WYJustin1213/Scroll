@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3306058306074137091}
   - component: {fileID: 5803857351602912821}
   m_Layer: 8
-  m_Name: BombSkelly
+  m_Name: FrostySkelly
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 3731198077307927349}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4, y: 0, z: 14}
+  m_LocalPosition: {x: 0, y: -0.07499999, z: 29.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -45,16 +45,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6f927ab0c294ce9abe4e86a2aab8ee0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sprite: {fileID: 780928295, guid: f64bad00a21d14719a20eca5acc287fa, type: 3}
-  hitbox: {fileID: 5307638643546856979}
+  definition: {fileID: 11400000, guid: 7c2d9e41b8a54f0d9e6a1b3c5d7f8a03, type: 2}
+  hitbox: {fileID: 2919554718879824275}
   lane: {fileID: 0}
   startTileIndex: 7
-  moveInterval: 1.5
-  health: 1
-  attack: 2
-  spriteOffset: 1.5
-  mana: {fileID: 2886999126242463011, guid: 368b047b88e594b34a28f20da6f95b08, type: 3}
-  manaAmount: 1
 --- !u!1 &9207595136345071695
 GameObject:
   m_ObjectHideFlags: 0
@@ -65,8 +59,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1331382697601512686}
   - component: {fileID: 3365292584433713735}
-  - component: {fileID: 5307638643546856979}
-  - component: {fileID: 3427194385354645777}
+  - component: {fileID: 2919554718879824275}
   m_Layer: 8
   m_Name: Sprite
   m_TagString: Untagged
@@ -83,7 +76,7 @@ Transform:
   m_GameObject: {fileID: 9207595136345071695}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.5, z: 0}
+  m_LocalPosition: {x: 0, y: 2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -133,18 +126,18 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 780928295, guid: f64bad00a21d14719a20eca5acc287fa, type: 3}
+  m_Sprite: {fileID: 813974550, guid: b2c61ff0bba60498fa39982ec8912c4c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 5, y: 5.004883}
+  m_Size: {x: 4, y: 4}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &5307638643546856979
+--- !u!61 &2919554718879824275
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -178,37 +171,15 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: -1.012578}
+  m_Offset: {x: -0.02611649, y: -0.1609838}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 5, y: 5.004883}
-    newSize: {x: 5, y: 5.004883}
+    oldSize: {x: 4, y: 4}
+    newSize: {x: 4, y: 4}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.9466667, y: 2.733088}
+  m_Size: {x: 2.8536012, y: 3.6780324}
   m_EdgeRadius: 0
---- !u!95 &3427194385354645777
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9207595136345071695}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 509901887b1c8bb40a29bf58a44f33ee, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0

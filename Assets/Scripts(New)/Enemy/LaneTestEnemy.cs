@@ -9,9 +9,6 @@ public class LaneTestEnemy : MonoBehaviour
     [SerializeField] private LaneManager lane;
     [SerializeField, Min(0)] private int startTileIndex;
 
-    [SerializeField] private GameObject mana;
-    [SerializeField] private int manaAmount = 1;
-
     private SpriteRenderer spriteRenderer;
     private LaneTile currentTile;
     private float moveTimer;
@@ -37,9 +34,14 @@ public class LaneTestEnemy : MonoBehaviour
         if (currentHealth == 0)
         {
             dead = true;
-            for(int i = 0; i < manaAmount; i++){
-                Instantiate(mana, transform.position, Quaternion.identity);
+            if (definition != null && definition.ManaPrefab != null)
+            {
+                for (int i = 0; i < definition.ManaAmount; i++)
+                {
+                    Instantiate(definition.ManaPrefab, transform.position, Quaternion.identity);
+                }
             }
+
             Destroy(gameObject);
         }
     }
