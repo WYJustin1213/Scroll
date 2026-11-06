@@ -1034,6 +1034,14 @@ PrefabInstance:
       propertyPath: m_Offset.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5443906228035942706, guid: d446243ef2e2d854fbab9891329d5321, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 2.5666666
+      objectReference: {fileID: 0}
+    - target: {fileID: 5443906228035942706, guid: d446243ef2e2d854fbab9891329d5321, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 3.4099998
+      objectReference: {fileID: 0}
     - target: {fileID: 5803857351602912821, guid: d446243ef2e2d854fbab9891329d5321, type: 3}
       propertyPath: lane
       value: 
@@ -8051,6 +8059,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3365292584433713735, guid: d446243ef2e2d854fbab9891329d5321, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 857073403, guid: 0e1b96f8f004c72429a815474cbf40cf, type: 3}
     - target: {fileID: 3731198077307927349, guid: d446243ef2e2d854fbab9891329d5321, type: 3}
       propertyPath: m_Name
       value: Enemy
@@ -8070,6 +8082,14 @@ PrefabInstance:
     - target: {fileID: 5114349050116577704, guid: d446243ef2e2d854fbab9891329d5321, type: 3}
       propertyPath: m_Offset.y
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5443906228035942706, guid: d446243ef2e2d854fbab9891329d5321, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 2.5666666
+      objectReference: {fileID: 0}
+    - target: {fileID: 5443906228035942706, guid: d446243ef2e2d854fbab9891329d5321, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 3.4099998
       objectReference: {fileID: 0}
     - target: {fileID: 5803857351602912821, guid: d446243ef2e2d854fbab9891329d5321, type: 3}
       propertyPath: lane
