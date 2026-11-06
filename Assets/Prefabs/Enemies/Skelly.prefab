@@ -49,6 +49,7 @@ MonoBehaviour:
   hitbox: {fileID: 3756893280109053623}
   lane: {fileID: 0}
   startTileIndex: 7
+  manaDropYOffset: 2
 --- !u!1 &9207595136345071695
 GameObject:
   m_ObjectHideFlags: 0

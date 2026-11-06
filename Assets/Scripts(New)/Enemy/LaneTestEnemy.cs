@@ -8,6 +8,7 @@ public class LaneTestEnemy : MonoBehaviour
     [SerializeField] private BoxCollider2D hitbox;
     [SerializeField] private LaneManager lane;
     [SerializeField, Min(0)] private int startTileIndex;
+    [SerializeField] private float manaDropYOffset;
 
     private SpriteRenderer spriteRenderer;
     private LaneTile currentTile;
@@ -38,7 +39,8 @@ public class LaneTestEnemy : MonoBehaviour
             {
                 for (int i = 0; i < definition.ManaAmount; i++)
                 {
-                    Instantiate(definition.ManaPrefab, transform.position, Quaternion.identity);
+                    Vector3 manaPosition = transform.position + Vector3.up * manaDropYOffset;
+                    Instantiate(definition.ManaPrefab, manaPosition, Quaternion.identity);
                 }
             }
 

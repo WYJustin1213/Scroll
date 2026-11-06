@@ -24,9 +24,7 @@ public class Manager : MonoBehaviour
     {
         if (commands)
         {
-            commands = false;
-            UICanvasGroup.alpha = 0f;
-            UICanvasGroup.interactable = false;
+            HideUI();
         }
         else
         {
@@ -34,6 +32,13 @@ public class Manager : MonoBehaviour
             UICanvasGroup.alpha = 1f;
             UICanvasGroup.interactable = true;
         }
+    }
+
+    public void HideUI()
+    {
+        commands = false;
+        UICanvasGroup.alpha = 0f;
+        UICanvasGroup.interactable = false;
     }
 
     public void ExitApplication()

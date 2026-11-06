@@ -11,7 +11,7 @@ public class LaneSpellController : MonoBehaviour
     [SerializeField] private LanePlayerMarker player;
     [SerializeField] private Transform spellOrigin;
     [SerializeField] private SpellDefinition defaultSpell;
-    [SerializeField] private GameObject spellPanel;
+    [SerializeField] private Manager uiManager;
 
     [Header("Casting")]
     [SerializeField] private Vector3 spawnOffset = new Vector3(0f, 0.65f, 0.55f);
@@ -129,8 +129,8 @@ public class LaneSpellController : MonoBehaviour
             return false;
 
         nextCastTime = Time.time + spell.Cooldown;
-        if (spellPanel != null)
-            spellPanel.SetActive(false);
+        if (uiManager != null)
+            uiManager.HideUI();
 
         return true;
     }

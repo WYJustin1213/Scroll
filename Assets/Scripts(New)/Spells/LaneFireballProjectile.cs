@@ -12,6 +12,10 @@ public class LaneFireballProjectile : MonoBehaviour
     [Header("Visual")]
     [SerializeField] private Color projectileColor = new Color(1f, 0.3f, 0.05f, 1f);
 
+    [Header("Hit Effect")]
+    [SerializeField] private SpellHitEffect hitEffectPrefab;
+    [SerializeField] private Vector3 hitEffectOffset = new Vector3(0f, 0.5f, 0f);
+
     private bool initialized;
 
     private void Awake()
@@ -84,6 +88,9 @@ public class LaneFireballProjectile : MonoBehaviour
             LaneTestEnemy enemy = FindEnemyOnTile(lane, tile);
             if (enemy != null)
             {
+                if (hitEffectPrefab != null)
+                    Instantiate(hitEffectPrefab, enemy.transform.position + hitEffectOffset, Quaternion.identity);
+
                 enemy.TakeDamage(damage);
                 break;
             }

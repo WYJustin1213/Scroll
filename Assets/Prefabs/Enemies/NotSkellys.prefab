@@ -206,3 +206,4 @@ MonoBehaviour:
   hitbox: {fileID: 468837688297207484}
   lane: {fileID: 0}
   startTileIndex: 7
+  manaDropYOffset: 2

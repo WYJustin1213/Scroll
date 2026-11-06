@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 [DisallowMultipleComponent]
 public class LaneSpellInput : MonoBehaviour
@@ -85,6 +86,10 @@ public class LaneSpellInput : MonoBehaviour
 
         if (!spellController.CastSpell(spell, point))
             return false;
+
+        inputField.DeactivateInputField();
+        if (EventSystem.current != null)
+            EventSystem.current.SetSelectedGameObject(null);
 
         if (clearAfterCast)
             inputField.SetTextWithoutNotify(string.Empty);
