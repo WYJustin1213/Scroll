@@ -36,8 +36,12 @@ public class LaneTestEnemy : MonoBehaviour
         if (health == 0)
         {
             dead = true;
-            for(int i = 0; i < manaAmount; i++){
-                Instantiate(mana, transform.position, Quaternion.identity);
+            for(int i = 0; i <= manaAmount; i++){
+                var offsetPos = new Vector3(transform.position.x + Random.Range(-2f, 2f), 
+                transform.position.y, 
+                transform.position.z + Random.Range(-2f, 2f));
+                Instantiate(mana, offsetPos, Quaternion.identity);
+                Debug.Log("Mana dropped at: " + offsetPos);
             }
             Destroy(gameObject);
         }
