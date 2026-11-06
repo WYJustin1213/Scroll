@@ -28,34 +28,35 @@ public class LaneFireballProjectile : MonoBehaviour
         }
     }
 
-    public bool Initialize(LaneManager lane, int startTileIndex)
+    // firstTileIndex is the first tile the fireball travels to (inclusive).
+    public bool Initialize(LaneManager lane, int firstTileIndex)
     {
         if (initialized)
             return false;
 
         initialized = true;
 
-        if (lane == null || lane.GetTile(startTileIndex) == null)
+        if (lane == null || lane.GetTile(firstTileIndex) == null)
         {
-            Debug.LogError("LaneFireballProjectile needs a valid lane and start tile.", this);
+            Debug.LogError("LaneFireballProjectile needs a valid lane and first tile.", this);
             Destroy(gameObject);
             return false;
         }
 
-        StartCoroutine(TravelLane(lane, startTileIndex));
+        StartCoroutine(TravelLane(lane, firstTileIndex));
         return true;
     }
 
-    private IEnumerator TravelLane(LaneManager lane, int startTileIndex)
+    private IEnumerator TravelLane(LaneManager lane, int firstTileIndex)
     {
-        LaneTile startTile = lane.GetTile(startTileIndex);
-        float heightOffset = transform.position.y - startTile.StandPosition.y;
+        LaneTile firstTile = lane.GetTile(firstTileIndex);
+        float heightOffset = transform.position.y - firstTile.StandPosition.y;
         int lastTileIndex = Mathf.Min(
-            startTileIndex + maxTileRange,
+            firstTileIndex + maxTileRange - 1,
             lane.TileCount - 1
         );
 
-        for (int tileIndex = startTileIndex + 1;
+        for (int tileIndex = firstTileIndex;
              tileIndex <= lastTileIndex;
              tileIndex++)
         {

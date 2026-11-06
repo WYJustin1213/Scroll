@@ -80,7 +80,39 @@ public class LaneSpellController : MonoBehaviour
             Quaternion.identity
         );
 
-        if (!projectile.Initialize(player.Lane, player.TileIndex))
+        if (!projectile.Initialize(player.Lane, player.TileIndex + 1))
+            return false;
+
+        nextCastTime = Time.time + cooldown;
+        return true;
+    }
+
+    // Casts from a lane's own spell origin, starting at the lane's first tile.
+    public bool CastFireball(LaneSpellPoint point)
+    {
+        if (Time.time < nextCastTime)
+            return false;
+
+        if (point == null || point.Lane == null || point.Lane.GetTile(0) == null)
+        {
+            Debug.LogError("LaneSpellController needs a lane spell point with a valid lane.", this);
+            return false;
+        }
+
+        if (fireballPrefab == null)
+        {
+            Debug.LogError("LaneSpellController needs a fireball prefab.", this);
+            return false;
+        }
+
+        Vector3 spawnPosition = point.SpellOrigin.position;
+        LaneFireballProjectile projectile = Instantiate(
+            fireballPrefab,
+            spawnPosition,
+            Quaternion.identity
+        );
+
+        if (!projectile.Initialize(point.Lane, 0))
             return false;
 
         nextCastTime = Time.time + cooldown;
