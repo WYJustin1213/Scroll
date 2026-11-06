@@ -53,6 +53,8 @@ MonoBehaviour:
   health: 2
   attack: 1
   spriteOffset: 1.8
+  mana: {fileID: 2886999126242463011, guid: 368b047b88e594b34a28f20da6f95b08, type: 3}
+  manaAmount: 1
 --- !u!1 &9207595136345071695
 GameObject:
   m_ObjectHideFlags: 0

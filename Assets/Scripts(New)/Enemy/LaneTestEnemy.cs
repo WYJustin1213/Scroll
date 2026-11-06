@@ -13,6 +13,9 @@ public class LaneTestEnemy : MonoBehaviour
     [SerializeField, Min(0f)] private float attack = 1f;
     [SerializeField] private float spriteOffset = 1.1f;
 
+    [SerializeField] private GameObject mana;
+    [SerializeField] private int manaAmount = 1;
+
     private SpriteRenderer spriteRenderer;
     private LaneTile currentTile;
     private float moveTimer;
@@ -33,6 +36,9 @@ public class LaneTestEnemy : MonoBehaviour
         if (health == 0)
         {
             dead = true;
+            for(int i = 0; i < manaAmount; i++){
+                Instantiate(mana, transform.position, Quaternion.identity);
+            }
             Destroy(gameObject);
         }
     }
