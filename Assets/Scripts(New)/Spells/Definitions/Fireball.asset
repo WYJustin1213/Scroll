@@ -18,3 +18,4 @@ MonoBehaviour:
   aliases: []
   projectilePrefab: {fileID: 11400000, guid: 7aa7b0e1c4514e4b853cdb549a329fe6, type: 3}
   cooldown: 0.5
+  spellElement: 0

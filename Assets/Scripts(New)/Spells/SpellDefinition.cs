@@ -1,6 +1,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum SpellElement
+{
+    Fire,
+    Water,
+    Shock,
+    Ice,
+    None
+}
+
 [CreateAssetMenu(fileName = "SpellDefinition", menuName = "Scroll/Spell Definition")]
 public class SpellDefinition : ScriptableObject
 {
@@ -17,6 +26,8 @@ public class SpellDefinition : ScriptableObject
     [Header("Casting")]
     [SerializeField] private LaneFireballProjectile projectilePrefab;
     [SerializeField, Min(0f)] private float cooldown = 0.5f;
+
+    public SpellElement spellElement;
 
     public LaneFireballProjectile ProjectilePrefab => projectilePrefab;
     public float Cooldown => cooldown;

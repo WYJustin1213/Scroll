@@ -1,5 +1,14 @@
 using UnityEngine;
 
+public enum EnemyElement
+{
+    Fire,
+    Water,
+    Shock,
+    Ice,
+    None
+}
+
 [CreateAssetMenu(fileName = "EnemyDefinition", menuName = "Scroll/Enemy Definition")]
 public class EnemyDefinition : ScriptableObject
 {
@@ -11,7 +20,18 @@ public class EnemyDefinition : ScriptableObject
     [SerializeField] private float spriteOffset = 1.1f;
     [SerializeField] private GameObject manaPrefab;
     [SerializeField, Min(0)] private int manaAmount = 1;
+    [SerializeField] private bool ability;
+    public EnemyElement enemyElement;
+    [SerializeField] private ElementImmunity immunities = ElementImmunity.None;
 
+    [SerializeField] private ElementWeakness weaknesses = ElementWeakness.None;
+
+    public ElementWeakness Weaknesses => weaknesses;
+    public bool IsWeakTo(SpellElement element) => weaknesses.IsWeakTo(element);
+    public ElementImmunity Immunities => immunities;
+    public bool IsImmuneTo(SpellElement element) => immunities.IsImmuneTo(element);
+
+    public bool Ability => ability;
     public Sprite Sprite => sprite;
     public float MoveInterval => moveInterval;
     public int Health => health;

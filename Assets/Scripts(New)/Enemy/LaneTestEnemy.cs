@@ -25,16 +25,33 @@ public class LaneTestEnemy : MonoBehaviour
     public LaneTile CurrentTile => currentTile;
     public bool IsDead => dead;
 
-    public void TakeDamage(int amount)
+    public void TakeDamage(int amount, SpellElement element = SpellElement.None)
     {
         if (dead || amount <= 0)
             return;
+
+        if (definition != null && definition.IsImmuneTo(element))
+            return;
+
+        // Immunity takes precedence over weakness if both are set for the same element.
+        if (definition != null && definition.IsWeakTo(element))
+            amount = Mathf.Max(amount, Health);
 
         currentHealth = Mathf.Max(0, Health - amount);
         healthInitialized = true;
         if (currentHealth == 0)
         {
             dead = true;
+            if (definition != null && definition.Ability)
+            {
+                EnemyAbility[] abilities = GetComponents<EnemyAbility>();
+                for (int i = 0; i < abilities.Length; i++)
+                {
+                    if (abilities[i] != null && abilities[i].isActiveAndEnabled)
+                        abilities[i].OnDeath(this);
+                }
+            }
+
             if (definition != null && definition.ManaPrefab != null)
             {
                 for (int i = 0; i < definition.ManaAmount; i++)
@@ -46,6 +63,22 @@ public class LaneTestEnemy : MonoBehaviour
 
             Destroy(gameObject);
         }
+    }
+
+    public bool InitializeAtTile(LaneManager spawnLane, LaneTile spawnTile)
+    {
+        if (spawnLane == null || spawnTile == null || spawnTile.Lane != spawnLane)
+        {
+            Debug.LogError("Cannot initialize an enemy at an invalid lane tile.", this);
+            return false;
+        }
+
+        lane = spawnLane;
+        startTileIndex = spawnTile.Index;
+        currentTile = spawnTile;
+        moveTimer = 0f;
+        transform.position = spawnTile.StandPosition;
+        return true;
     }
 
     private void OnEnable()
@@ -76,17 +109,26 @@ public class LaneTestEnemy : MonoBehaviour
         if (definition == null)
             return;
 
+        float moveInterval = definition.MoveInterval;
         moveTimer += Time.deltaTime;
-        if (moveTimer < definition.MoveInterval)
-            return;
+        while (moveTimer >= moveInterval)
+        {
+            LaneTile next = lane.GetNextTile(currentTile);
+            if (next == null)
+            {
+                moveTimer = 0f;
+                transform.position = currentTile.StandPosition;
+                return;
+            }
 
-        moveTimer -= definition.MoveInterval;
-        LaneTile next = lane.GetNextTile(currentTile);
-        if (next == null)
-            return;
+            currentTile = next;
+            moveTimer -= moveInterval;
+        }
 
-        currentTile = next;
-        transform.position = currentTile.StandPosition;
+        LaneTile destination = lane.GetNextTile(currentTile);
+        transform.position = destination != null
+            ? Vector3.Lerp(currentTile.StandPosition, destination.StandPosition, moveTimer / moveInterval)
+            : currentTile.StandPosition;
     }
 
     private void SnapToStartTile()

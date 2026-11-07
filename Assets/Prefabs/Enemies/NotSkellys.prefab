@@ -167,6 +167,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2203112363151477902}
   - component: {fileID: 8256688831550194764}
+  - component: {fileID: 9176382047158032641}
   m_Layer: 8
   m_Name: NotSkellys
   m_TagString: Untagged
@@ -207,3 +208,17 @@ MonoBehaviour:
   lane: {fileID: 0}
   startTileIndex: 7
   manaDropYOffset: 2
+--- !u!114 &9176382047158032641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2673804984188028447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7999bb01b5b49549bc49bb63689d0e5, type: 3}
+  m_Name: ""
+  m_EditorClassIdentifier: ""
+  enemyPrefab: {fileID: 5803857351602912821, guid: be2d74cf776c88c4cb84427207e488f8, type: 3}
+  spawnCount: 3

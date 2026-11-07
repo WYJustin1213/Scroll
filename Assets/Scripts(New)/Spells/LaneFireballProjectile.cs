@@ -17,6 +17,7 @@ public class LaneFireballProjectile : MonoBehaviour
     [SerializeField] private Vector3 hitEffectOffset = new Vector3(0f, 0.5f, 0f);
 
     private bool initialized;
+    private SpellElement element = SpellElement.None;
 
     private void Awake()
     {
@@ -33,12 +34,13 @@ public class LaneFireballProjectile : MonoBehaviour
     }
 
     // firstTileIndex is the first tile the fireball travels to (inclusive).
-    public bool Initialize(LaneManager lane, int firstTileIndex)
+    public bool Initialize(LaneManager lane, int firstTileIndex, SpellElement spellElement)
     {
         if (initialized)
             return false;
 
         initialized = true;
+        element = spellElement;
 
         if (lane == null || lane.GetTile(firstTileIndex) == null)
         {
@@ -91,7 +93,7 @@ public class LaneFireballProjectile : MonoBehaviour
                 if (hitEffectPrefab != null)
                     Instantiate(hitEffectPrefab, enemy.transform.position + hitEffectOffset, Quaternion.identity);
 
-                enemy.TakeDamage(damage);
+                enemy.TakeDamage(damage, element);
                 break;
             }
         }

@@ -125,7 +125,7 @@ public class LaneSpellController : MonoBehaviour
             Quaternion.identity
         );
 
-        if (!projectile.Initialize(lane, firstTileIndex))
+        if (!projectile.Initialize(lane, firstTileIndex, spell.spellElement))
             return false;
 
         nextCastTime = Time.time + spell.Cooldown;
