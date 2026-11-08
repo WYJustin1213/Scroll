@@ -13,11 +13,14 @@ MonoBehaviour:
   m_Name: BigBonedSkelly
   m_EditorClassIdentifier: 
   sprite: {fileID: 1453331143, guid: 28d00572b889e4f8c9a91b5aaebf6d53, type: 3}
-  moveInterval: 1.75
-  health: 5
+  moveInterval: 3
+  health: 4
   attack: 3
   drop: 3
   spriteOffset: 1.5
   manaPrefab: {fileID: 2886999126242463011, guid: 368b047b88e594b34a28f20da6f95b08, type: 3}
   manaAmount: 1
+  ability: 0
   enemyElement: 4
+  immunities: 0
+  weaknesses: 0

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: NotSkellys
   m_EditorClassIdentifier: 
   sprite: {fileID: -1109527324, guid: cd334daac06354f65aa264e5432749a1, type: 3}
-  moveInterval: 1.5
+  moveInterval: 6
   health: 1
   attack: 3
   drop: 1
@@ -22,3 +22,5 @@ MonoBehaviour:
   manaAmount: 1
   ability: 1
   enemyElement: 4
+  immunities: 0
+  weaknesses: 0

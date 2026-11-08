@@ -3858,6 +3858,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FrostySkelly
       objectReference: {fileID: 0}
+    - target: {fileID: 3731198077307927349, guid: cb6a03990a560b446b130b3af224c85b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5803857351602912821, guid: cb6a03990a560b446b130b3af224c85b, type: 3}
       propertyPath: lane
       value: 
@@ -7609,6 +7613,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: JumpSkelly
       objectReference: {fileID: 0}
+    - target: {fileID: 7916092552842785797, guid: 2fe4a3005a8333d4aa0515aa90158405, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7743,6 +7751,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BigBonedSkelly
       objectReference: {fileID: 0}
+    - target: {fileID: 3042501879422485944, guid: 6bfbe062912f6524cb46c14854b159e1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7804,6 +7816,10 @@ PrefabInstance:
     - target: {fileID: 3731198077307927349, guid: be2d74cf776c88c4cb84427207e488f8, type: 3}
       propertyPath: m_Name
       value: Skelly
+      objectReference: {fileID: 0}
+    - target: {fileID: 3731198077307927349, guid: be2d74cf776c88c4cb84427207e488f8, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5803857351602912821, guid: be2d74cf776c88c4cb84427207e488f8, type: 3}
       propertyPath: lane

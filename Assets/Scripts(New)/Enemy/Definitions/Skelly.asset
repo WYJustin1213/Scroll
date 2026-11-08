@@ -13,11 +13,14 @@ MonoBehaviour:
   m_Name: Skelly
   m_EditorClassIdentifier: 
   sprite: {fileID: -1416107998, guid: fe210c9c604974b75b195bc17bbee4e4, type: 3}
-  moveInterval: 1.25
+  moveInterval: 3
   health: 2
   attack: 1
   drop: 1
   spriteOffset: 2.11
   manaPrefab: {fileID: 2886999126242463011, guid: 368b047b88e594b34a28f20da6f95b08, type: 3}
   manaAmount: 1
+  ability: 0
   enemyElement: 4
+  immunities: 0
+  weaknesses: 0

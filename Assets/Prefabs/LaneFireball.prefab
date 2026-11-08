@@ -104,4 +104,4 @@ MonoBehaviour:
   damage: 1
   projectileColor: {r: 1, g: 0.3, b: 0.05, a: 1}
   hitEffectPrefab: {fileID: 1000004, guid: 3d9a6f1e8c2b4e7a9b50c4d1e7f2a863, type: 3}
-  hitEffectOffset: {x: 0, y: 1.5, z: 0}
+  hitEffectOffset: {x: 0, y: 1.4, z: 0}
