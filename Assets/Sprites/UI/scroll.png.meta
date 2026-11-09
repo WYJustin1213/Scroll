@@ -100,10 +100,10 @@ TextureImporter:
       name: scroll_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 2732
-        height: 2055
+        x: 8
+        y: 7
+        width: 1902
+        height: 422
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -112,8 +112,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d689dc8d55f3344ee848b57f0c41fb0e
-      internalID: 1536086138
+      spriteID: 8a8b10f9280434b0084af9cd1ff7f4cf
+      internalID: -644175381
       vertices: []
       indices: 
       edges: []
@@ -122,7 +122,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: dd94b2718c7724380b52f89c44cf36f9
+    spriteID: 9ffa54319036a4b2392bfe0ec40390b9
     internalID: 0
     vertices: []
     indices: 
@@ -132,7 +132,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      scroll_0: 1536086138
+      scroll_0: -644175381
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
