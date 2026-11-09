@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BigBonedSkelly
   m_EditorClassIdentifier: 
   sprite: {fileID: 1453331143, guid: 28d00572b889e4f8c9a91b5aaebf6d53, type: 3}
-  moveInterval: 3
+  moveInterval: 4
   health: 4
   attack: 3
   drop: 3

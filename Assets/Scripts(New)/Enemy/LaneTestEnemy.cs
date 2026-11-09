@@ -63,6 +63,7 @@ public class LaneTestEnemy : MonoBehaviour
                 {
                     Vector3 manaPosition = transform.position + Vector3.up * manaDropYOffset;
                     Instantiate(definition.ManaPrefab, manaPosition, Quaternion.identity);
+                    Debug.Log("Dropped mana");
                 }
             }
 
