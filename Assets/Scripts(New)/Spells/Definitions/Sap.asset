@@ -10,12 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6397ded06612477eb7f05259c8eb7102, type: 3}
-  m_Name: Fireball
+  m_Name: Sap
   m_EditorClassIdentifier: 
-  displayName: Fireball
-  description: Launches a fireball down the selected lane.
-  commandText: Fireball
+  displayName: Sap
+  description: Removes every instance of the configured target prefab and restores
+    1 mana for each one.
+  commandText: Sap
   aliases: []
-  projectilePrefab: {fileID: 11400000, guid: 7aa7b0e1c4514e4b853cdb549a329fe6, type: 3}
-  cooldown: 0.5
-  spellElement: 0
+  function: 1
+  directional: 0
+  projectilePrefab: {fileID: 0}
+  sapTargetPrefab: {fileID: 2886999126242463011, guid: 368b047b88e594b34a28f20da6f95b08, type: 3}
+  cooldown: 0
+  manaCost: 0
+  spellElement: 4

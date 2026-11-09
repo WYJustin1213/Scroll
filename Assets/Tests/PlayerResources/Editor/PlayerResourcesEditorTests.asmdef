@@ -1,0 +1,12 @@
+{
+    "name": "PlayerResourcesEditorTests",
+    "references": [
+        "UnityEngine.UI"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ]
+}

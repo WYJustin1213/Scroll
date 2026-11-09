@@ -1,0 +1,9 @@
+{
+    "name": "PlayerResourcesTests",
+    "references": [
+        "UnityEngine.UI"
+    ],
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ]
+}

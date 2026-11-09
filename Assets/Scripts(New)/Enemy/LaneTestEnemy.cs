@@ -16,6 +16,11 @@ public class LaneTestEnemy : MonoBehaviour
     private bool dead;
     private int currentHealth;
     private bool healthInitialized;
+    private bool jumping;
+    private Vector3 jumpStart;
+    private float jumpElapsed;
+    private float jumpDuration;
+    private float jumpHeight;
 
     public EnemyDefinition Definition => definition;
     public int Health => healthInitialized ? currentHealth : (definition != null ? definition.Health : 0);
@@ -77,8 +82,27 @@ public class LaneTestEnemy : MonoBehaviour
         startTileIndex = spawnTile.Index;
         currentTile = spawnTile;
         moveTimer = 0f;
+        jumping = false;
         transform.position = spawnTile.StandPosition;
         return true;
+    }
+
+    public void JumpToTile(LaneTile destination, float duration, float height)
+    {
+        if (dead || destination == null || destination.Lane == null || duration <= 0f)
+        {
+            Debug.LogError("Cannot jump to an invalid tile or with a non-positive duration.", this);
+            return;
+        }
+
+        jumpStart = transform.position;
+        lane = destination.Lane;
+        currentTile = destination;
+        moveTimer = 0f;
+        jumpElapsed = 0f;
+        jumpDuration = duration;
+        jumpHeight = Mathf.Max(0f, height);
+        jumping = true;
     }
 
     private void OnEnable()
@@ -105,6 +129,17 @@ public class LaneTestEnemy : MonoBehaviour
     {
         if (!Application.isPlaying || lane == null || currentTile == null)
             return;
+
+        if (jumping)
+        {
+            jumpElapsed = Mathf.Min(jumpElapsed + Time.deltaTime, jumpDuration);
+            float progress = jumpElapsed / jumpDuration;
+            transform.position = Vector3.Lerp(jumpStart, currentTile.StandPosition, progress)
+                + Vector3.up * (4f * jumpHeight * progress * (1f - progress));
+            if (progress >= 1f)
+                jumping = false;
+            return;
+        }
 
         if (definition == null)
             return;

@@ -13,14 +13,14 @@ MonoBehaviour:
   m_Name: JumpSkelly
   m_EditorClassIdentifier: 
   sprite: {fileID: -1330495364, guid: 6ad3876d20edacd4e85e5ef86000239d, type: 3}
-  moveInterval: 2
+  moveInterval: 3
   health: 1
   attack: 2
   drop: 1
   spriteOffset: 1.8
   manaPrefab: {fileID: 2886999126242463011, guid: 368b047b88e594b34a28f20da6f95b08, type: 3}
   manaAmount: 1
-  ability: 0
+  ability: 1
   enemyElement: 4
   immunities: 0
   weaknesses: 0

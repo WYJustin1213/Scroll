@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Manager : MonoBehaviour
@@ -31,7 +32,21 @@ public class Manager : MonoBehaviour
             commands = true;
             UICanvasGroup.alpha = 1f;
             UICanvasGroup.interactable = true;
+
+            LaneSpellInput spellInput = CommandsUI != null
+                ? CommandsUI.GetComponentInChildren<LaneSpellInput>()
+                : null;
+            if (spellInput != null)
+                StartCoroutine(FocusSpellInputNextFrame(spellInput));
         }
+    }
+
+    private IEnumerator FocusSpellInputNextFrame(LaneSpellInput spellInput)
+    {
+        yield return null;
+
+        if (commands && spellInput != null && spellInput.isActiveAndEnabled)
+            spellInput.FocusInput();
     }
 
     public void HideUI()

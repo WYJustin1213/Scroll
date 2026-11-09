@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 [DisallowMultipleComponent]
@@ -18,6 +19,8 @@ public class LaneFireballProjectile : MonoBehaviour
 
     private bool initialized;
     private SpellElement element = SpellElement.None;
+    private Dictionary<LaneTestEnemy, Vector3> enemyPositions = new Dictionary<LaneTestEnemy, Vector3>();
+    private Dictionary<LaneTestEnemy, Vector3> currentEnemyPositions = new Dictionary<LaneTestEnemy, Vector3>();
 
     private void Awake()
     {
@@ -49,6 +52,7 @@ public class LaneFireballProjectile : MonoBehaviour
             return false;
         }
 
+        RememberEnemyPositions(lane);
         StartCoroutine(TravelLane(lane, firstTileIndex));
         return true;
     }
@@ -74,49 +78,92 @@ public class LaneFireballProjectile : MonoBehaviour
             if (flatDirection.sqrMagnitude > 0.0001f)
                 transform.rotation = Quaternion.LookRotation(flatDirection);
 
-            while ((transform.position - targetPosition).sqrMagnitude > 0.0001f)
+            do
             {
-                transform.position = Vector3.MoveTowards(
-                    transform.position,
+                Vector3 startPosition = transform.position;
+                Vector3 endPosition = Vector3.MoveTowards(
+                    startPosition,
                     targetPosition,
                     moveSpeed * Time.deltaTime
                 );
 
-                yield return null;
-            }
+                LaneTestEnemy enemy = FindCrossedEnemy(lane, startPosition, endPosition, flatDirection);
+                transform.position = endPosition;
+                if (enemy != null)
+                {
+                    if (hitEffectPrefab != null)
+                        Instantiate(hitEffectPrefab, enemy.transform.position + hitEffectOffset, Quaternion.identity);
 
-            transform.position = targetPosition;
+                    enemy.TakeDamage(damage, element);
+                    Destroy(gameObject);
+                    yield break;
+                }
 
-            LaneTestEnemy enemy = FindEnemyOnTile(lane, tile);
-            if (enemy != null)
-            {
-                if (hitEffectPrefab != null)
-                    Instantiate(hitEffectPrefab, enemy.transform.position + hitEffectOffset, Quaternion.identity);
+                if ((endPosition - targetPosition).sqrMagnitude == 0f && tileIndex == lastTileIndex)
+                    break;
 
-                enemy.TakeDamage(damage, element);
-                break;
-            }
+                if ((endPosition - startPosition).sqrMagnitude > 0f ||
+                    (endPosition - targetPosition).sqrMagnitude > 0f)
+                    yield return null;
+            } while ((transform.position - targetPosition).sqrMagnitude > 0f);
         }
 
         Destroy(gameObject);
     }
 
-    private static LaneTestEnemy FindEnemyOnTile(LaneManager lane, LaneTile tile)
+    private void RememberEnemyPositions(LaneManager lane)
+    {
+        enemyPositions.Clear();
+        LaneTestEnemy[] enemies = FindObjectsByType<LaneTestEnemy>(FindObjectsSortMode.None);
+        for (int i = 0; i < enemies.Length; i++)
+        {
+            if (!enemies[i].IsDead && enemies[i].Lane == lane)
+                enemyPositions[enemies[i]] = enemies[i].transform.position;
+        }
+    }
+
+    private LaneTestEnemy FindCrossedEnemy(
+        LaneManager lane, Vector3 startPosition, Vector3 endPosition, Vector3 direction)
     {
         LaneTestEnemy[] enemies = FindObjectsByType<LaneTestEnemy>(FindObjectsSortMode.None);
+        currentEnemyPositions.Clear();
+        LaneTestEnemy closestEnemy = null;
+        float closestTime = float.PositiveInfinity;
+        direction.y = 0f;
+        direction = direction.sqrMagnitude > 0.0001f ? direction.normalized : lane.transform.forward;
+        direction.y = 0f;
+        direction.Normalize();
 
         for (int i = 0; i < enemies.Length; i++)
         {
             LaneTestEnemy enemy = enemies[i];
-            if (enemy != null &&
-                !enemy.IsDead &&
-                enemy.Lane == lane &&
-                enemy.CurrentTile == tile)
+            if (enemy == null || enemy.IsDead || enemy.Lane != lane)
+                continue;
+
+            Vector3 currentPosition = enemy.transform.position;
+            currentEnemyPositions[enemy] = currentPosition;
+            if (!enemyPositions.TryGetValue(enemy, out Vector3 previousPosition))
+                previousPosition = currentPosition;
+
+            // Compare relative positions along the lane so motion by either object can cause a hit.
+            float startDistance = Vector3.Dot(previousPosition - startPosition, direction);
+            float endDistance = Vector3.Dot(currentPosition - endPosition, direction);
+            if ((startDistance > 0f && endDistance > 0f) ||
+                (startDistance < 0f && endDistance < 0f))
+                continue;
+
+            float distanceChange = startDistance - endDistance;
+            float hitTime = distanceChange != 0f ? startDistance / distanceChange : 0f;
+            if (hitTime < closestTime)
             {
-                return enemy;
+                closestTime = hitTime;
+                closestEnemy = enemy;
             }
         }
 
-        return null;
+        Dictionary<LaneTestEnemy, Vector3> previousPositions = enemyPositions;
+        enemyPositions = currentEnemyPositions;
+        currentEnemyPositions = previousPositions;
+        return closestEnemy;
     }
 }

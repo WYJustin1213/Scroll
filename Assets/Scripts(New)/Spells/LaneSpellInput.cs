@@ -14,7 +14,7 @@ public class LaneSpellInput : MonoBehaviour
     [SerializeField] private List<LaneSpellPoint> lanes = new List<LaneSpellPoint>();
 
     [Header("Behavior")]
-    [Tooltip("Cast as soon as the typed text matches a spell and lane.")]
+    [Tooltip("Cast as soon as the typed text matches a spell and, when directional, a lane.")]
     [SerializeField] private bool castWhenTyped = true;
     [SerializeField] private bool castOnSubmit = true;
     [SerializeField] private bool clearAfterCast = true;
@@ -55,20 +55,42 @@ public class LaneSpellInput : MonoBehaviour
         inputField.onSubmit.RemoveListener(HandleSubmit);
     }
 
+    public void FocusInput()
+    {
+        if (inputField == null)
+        {
+            Debug.LogError("LaneSpellInput needs an input field.", this);
+            return;
+        }
+
+        if (EventSystem.current == null)
+        {
+            Debug.LogError("LaneSpellInput needs an EventSystem to focus the input field.", this);
+            return;
+        }
+
+        if (!inputField.isActiveAndEnabled || !inputField.IsInteractable())
+            return;
+
+        EventSystem.current.SetSelectedGameObject(inputField.gameObject);
+        inputField.ActivateInputField();
+    }
+
     private void HandleValueChanged(string text)
     {
         if (castWhenTyped)
-            TryCast(text);
+            TryCast(text, out _);
     }
 
     private void HandleSubmit(string text)
     {
-        if (castOnSubmit && !TryCast(text) && !string.IsNullOrWhiteSpace(text))
+        if (castOnSubmit && !TryCast(text, out bool matched) && !matched && !string.IsNullOrWhiteSpace(text))
             Debug.LogWarning("No spell matches \"" + text + "\".", this);
     }
 
-    private bool TryCast(string text)
+    private bool TryCast(string text, out bool matched)
     {
+        matched = false;
         if (spellDatabase == null)
         {
             Debug.LogError("LaneSpellInput needs a SpellDatabase.", this);
@@ -78,6 +100,7 @@ public class LaneSpellInput : MonoBehaviour
         if (!TryFindSpellAndLane(text, out SpellDefinition spell, out LaneSpellPoint point))
             return false;
 
+        matched = true;
         if (spellController == null)
         {
             Debug.LogError("LaneSpellInput needs a LaneSpellController.", this);
@@ -107,6 +130,9 @@ public class LaneSpellInput : MonoBehaviour
 
         string typed = NormalizeInput(text);
 
+        if (spellDatabase.TryFindSpell(typed, out spell) && !spell.Directional)
+            return true;
+
         for (int i = 0; i < lanes.Count; i++)
         {
             LaneSpellPoint lane = lanes[i];
@@ -118,7 +144,7 @@ public class LaneSpellInput : MonoBehaviour
                 !TryGetSpellText(typed, laneName, out string spellText))
                 continue;
 
-            if (spellDatabase.TryFindSpell(spellText, out spell))
+            if (spellDatabase.TryFindSpell(spellText, out spell) && spell.Directional)
             {
                 match = lane;
                 return true;
