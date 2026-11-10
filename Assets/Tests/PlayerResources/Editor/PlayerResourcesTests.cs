@@ -193,6 +193,60 @@ public class PlayerResourcesTests
         Assert.That(manaRow.childCount, Is.EqualTo(5));
     }
 
+    [Test]
+    public void GameSceneResourceIconsReferenceTheirActualRows()
+    {
+        Scene gameScene = EditorSceneManager.OpenPreviewScene("Assets/Scenes/SkellyScroll/Test1.unity");
+        try
+        {
+            Component sceneDisplay = null;
+            foreach (GameObject root in gameScene.GetRootGameObjects())
+            {
+                Component[] displays = root.GetComponentsInChildren(FindType("PlayerResourcesDisplay"), true);
+                foreach (Component candidate in displays)
+                {
+                    Assert.That(sceneDisplay, Is.Null, "Expected one resource display in the game scene.");
+                    sceneDisplay = candidate;
+                }
+            }
+
+            Assert.That(sceneDisplay, Is.Not.Null);
+            SerializedObject serialized = new SerializedObject(sceneDisplay);
+            AssertIconReferences(serialized, "healthIcons", "healthRow");
+            AssertIconReferences(serialized, "manaIcons", "manaRow");
+            sceneDisplay.GetType().GetMethod("Update", PrivateInstance).Invoke(sceneDisplay, null);
+            AssertIconReferences(serialized, "healthIcons", "healthRow");
+            AssertIconReferences(serialized, "manaIcons", "manaRow");
+        }
+        finally
+        {
+            EditorSceneManager.ClosePreviewScene(gameScene);
+        }
+    }
+
+    [Test]
+    public void DestroyedIconsAreReplacedOnRefresh()
+    {
+        UnityEngine.Object.DestroyImmediate(healthRow.GetChild(1).gameObject);
+        Tick();
+        Assert.That(healthRow.childCount, Is.EqualTo(5));
+        Assert.That(Visible(healthRow), Is.EqualTo(5));
+    }
+
+    private static void AssertIconReferences(SerializedObject display, string iconsName, string rowName)
+    {
+        SerializedProperty icons = display.FindProperty(iconsName);
+        RectTransform row = (RectTransform)display.FindProperty(rowName).objectReferenceValue;
+        Assert.That(icons.arraySize, Is.EqualTo(row.childCount), iconsName);
+        for (int i = 0; i < icons.arraySize; i++)
+        {
+            Image icon = icons.GetArrayElementAtIndex(i).objectReferenceValue as Image;
+            Assert.That(icon, Is.Not.Null, iconsName + " index " + i);
+            Assert.That(icon.gameObject, Is.Not.Null, iconsName + " index " + i);
+            Assert.That(icon.transform, Is.EqualTo(row.GetChild(i)), iconsName + " index " + i);
+        }
+    }
+
     private RectTransform CreateRow(string name)
     {
         GameObject row = new GameObject(name, typeof(RectTransform));

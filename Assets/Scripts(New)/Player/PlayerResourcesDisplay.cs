@@ -74,7 +74,7 @@ public class PlayerResourcesDisplay : MonoBehaviour
             return;
 
         if (layoutDirty || resources.Health != displayedHealth || resources.Mana != displayedMana ||
-            healthIcons.Contains(null) || manaIcons.Contains(null))
+            healthIcons.Exists(IsInvalidIcon) || manaIcons.Exists(IsInvalidIcon))
             Refresh();
     }
 
@@ -126,7 +126,7 @@ public class PlayerResourcesDisplay : MonoBehaviour
         {
             foreach (Image icon in icons)
             {
-                if (icon != null)
+                if (!IsInvalidIcon(icon))
                     DestroyIcon(icon.gameObject);
             }
             icons.Clear();
@@ -138,7 +138,19 @@ public class PlayerResourcesDisplay : MonoBehaviour
             MarkChanged(this);
         }
 
-        if (icons.RemoveAll(icon => icon == null) > 0)
+        bool orphanedIcons = false;
+        int removed = icons.RemoveAll(icon =>
+        {
+            if (icon == null)
+                return true;
+            if (icon.gameObject != null)
+                return false;
+            orphanedIcons = true;
+            return true;
+        });
+        if (orphanedIcons)
+            Debug.LogWarning("Player resource display found orphaned icons and will replace them.", this);
+        if (removed > 0)
             MarkChanged(this);
 
         while (icons.Count < count)
@@ -175,6 +187,11 @@ public class PlayerResourcesDisplay : MonoBehaviour
                 MarkChanged(icon);
             }
         }
+    }
+
+    private static bool IsInvalidIcon(Image icon)
+    {
+        return icon == null || icon.gameObject == null;
     }
 
     private void DestroyIcon(GameObject icon)

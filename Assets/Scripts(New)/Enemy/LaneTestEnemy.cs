@@ -4,6 +4,8 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class LaneTestEnemy : MonoBehaviour
 {
+    private static readonly Vector3 ManaDropSpacing = new Vector3(1.75f, 0.3f, 0.2f);
+
     [SerializeField] private EnemyDefinition definition;
     [SerializeField] private BoxCollider2D hitbox;
     [SerializeField] private LaneManager lane;
@@ -29,6 +31,7 @@ public class LaneTestEnemy : MonoBehaviour
     public LaneManager Lane => lane;
     public LaneTile CurrentTile => currentTile;
     public bool IsDead => dead;
+    public bool IsJumping => jumping;
 
     public void TakeDamage(int amount, SpellElement element = SpellElement.None)
     {
@@ -59,11 +62,12 @@ public class LaneTestEnemy : MonoBehaviour
 
             if (definition != null && definition.ManaPrefab != null)
             {
-                for (int i = 0; i < definition.ManaAmount; i++)
+                for (int i = 0; i < definition.Drop; i++)
                 {
-                    Vector3 manaPosition = transform.position + Vector3.up * manaDropYOffset;
+                    float offset = i - (definition.Drop - 1) / 2f;
+                    Vector3 manaPosition = transform.position + Vector3.up * manaDropYOffset
+                        + ManaDropSpacing * offset;
                     Instantiate(definition.ManaPrefab, manaPosition, Quaternion.identity);
-                    Debug.Log("Dropped mana");
                 }
             }
 

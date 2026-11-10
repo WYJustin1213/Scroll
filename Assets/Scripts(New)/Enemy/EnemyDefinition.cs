@@ -19,7 +19,6 @@ public class EnemyDefinition : ScriptableObject
     [SerializeField, Min(1)] private int drop = 1;
     [SerializeField] private float spriteOffset = 1.1f;
     [SerializeField] private GameObject manaPrefab;
-    [SerializeField, Min(0)] private int manaAmount = 1;
     [SerializeField] private bool ability;
     public EnemyElement enemyElement;
     [SerializeField] private ElementImmunity immunities = ElementImmunity.None;
@@ -39,5 +38,4 @@ public class EnemyDefinition : ScriptableObject
     public int Drop => drop;
     public float SpriteOffset => spriteOffset;
     public GameObject ManaPrefab => manaPrefab;
-    public int ManaAmount => manaAmount;
 }

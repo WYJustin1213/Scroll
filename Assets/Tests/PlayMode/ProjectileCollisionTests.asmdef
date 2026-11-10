@@ -1,5 +1,8 @@
 {
     "name": "ProjectileCollisionTests",
+    "references": [
+        "UnityEngine.UI"
+    ],
     "optionalUnityReferences": [
         "TestAssemblies"
     ]

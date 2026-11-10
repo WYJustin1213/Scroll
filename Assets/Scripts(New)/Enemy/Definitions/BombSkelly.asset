@@ -19,7 +19,6 @@ MonoBehaviour:
   drop: 1
   spriteOffset: 2.1
   manaPrefab: {fileID: 2886999126242463011, guid: 368b047b88e594b34a28f20da6f95b08, type: 3}
-  manaAmount: 1
   ability: 0
   enemyElement: 0
   immunities: 0

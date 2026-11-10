@@ -5,6 +5,7 @@ using System.Reflection;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
+using UnityEngine.UI;
 using Object = UnityEngine.Object;
 
 public class JumpOnSpellCastTests
@@ -206,6 +207,39 @@ public class JumpOnSpellCastTests
 
         Assert.That(Cast(), Is.True);
         Assert.That((int)resources.GetType().GetProperty("Mana").GetValue(resources), Is.EqualTo(initialMana + 1));
+    }
+
+    [Test]
+    public void SapRefreshesResourceDisplayAfterCollectingMana()
+    {
+        GameObject root = NewObject("Resource display");
+        root.SetActive(false);
+        Component display = root.AddComponent(TypeOf("PlayerResourcesDisplay"));
+        GameObject healthRow = NewObject("Health row");
+        healthRow.AddComponent<RectTransform>();
+        healthRow.transform.SetParent(root.transform, false);
+        GameObject manaRow = NewObject("Mana row");
+        manaRow.AddComponent<RectTransform>();
+        manaRow.transform.SetParent(root.transform, false);
+        Image healthPrefab = NewObject("Health icon prefab").AddComponent<Image>();
+        Image manaPrefab = NewObject("Mana icon prefab").AddComponent<Image>();
+        Set(display, "resources", resources);
+        Set(display, "healthRow", healthRow.transform);
+        Set(display, "manaRow", manaRow.transform);
+        Set(display, "healthPrefab", healthPrefab);
+        Set(display, "manaPrefab", manaPrefab);
+        root.SetActive(true);
+
+        GameObject drop = NewObject("Tagged mana drop");
+        drop.tag = "DropMana";
+        Set(spell, "function", Enum.Parse(TypeOf("SpellFunction"), "Sap"));
+        Set(spell, "manaCost", 0);
+        int initialMana = (int)resources.GetType().GetProperty("Mana").GetValue(resources);
+
+        Assert.That(Cast(), Is.True);
+        Assert.That((int)resources.GetType().GetProperty("Mana").GetValue(resources), Is.EqualTo(initialMana + 2));
+        Assert.That(manaRow.transform.childCount, Is.EqualTo(initialMana + 2));
+        Assert.That(healthRow.transform.childCount, Is.EqualTo(5));
     }
 
     [UnityTest]
