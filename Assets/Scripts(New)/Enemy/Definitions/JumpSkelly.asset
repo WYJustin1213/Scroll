@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: JumpSkelly
   m_EditorClassIdentifier: 
   sprite: {fileID: -1330495364, guid: 6ad3876d20edacd4e85e5ef86000239d, type: 3}
-  moveInterval: 3
+  moveInterval: 2
   health: 1
   attack: 2
   drop: 1
