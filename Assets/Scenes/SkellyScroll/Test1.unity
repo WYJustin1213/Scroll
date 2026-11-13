@@ -1268,8 +1268,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1203.1636, y: 984.6306}
-  m_SizeDelta: {x: 1187.943, y: 169.341}
+  m_AnchoredPosition: {x: 1109.8083, y: 984.6306}
+  m_SizeDelta: {x: 1374.653, y: 169.341}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &168789477
 MonoBehaviour:
@@ -1293,8 +1293,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Press TAB to inscribe commands.
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: e1ed2bd489bb74e69b03cef4a09ffd57, type: 2}
+  m_sharedMaterial: {fileID: 6251340348341640827, guid: e1ed2bd489bb74e69b03cef4a09ffd57, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1325,7 +1325,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 4
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -4772,8 +4772,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1155.6548, y: 806}
-  m_SizeDelta: {x: 1282.96, y: 169.341}
+  m_AnchoredPosition: {x: 1072.4, y: 806}
+  m_SizeDelta: {x: 1449.6, y: 169.341}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &817798488
 MonoBehaviour:
@@ -4799,8 +4799,8 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c2a21198f63ed417ebd20236840db6b2, type: 2}
+  m_sharedMaterial: {fileID: -62081284080276878, guid: c2a21198f63ed417ebd20236840db6b2, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -11092,8 +11092,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1072.3533, y: 622}
-  m_SizeDelta: {x: 1449.563, y: 169.341}
+  m_AnchoredPosition: {x: 1031.01, y: 622}
+  m_SizeDelta: {x: 1532.25, y: 169.341}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2105456354
 MonoBehaviour:
@@ -11117,8 +11117,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: '"Sap" - Gain mana and collect mana drops'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c2a21198f63ed417ebd20236840db6b2, type: 2}
+  m_sharedMaterial: {fileID: -62081284080276878, guid: c2a21198f63ed417ebd20236840db6b2, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
