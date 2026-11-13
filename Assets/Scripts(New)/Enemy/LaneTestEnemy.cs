@@ -25,8 +25,8 @@ public class LaneTestEnemy : MonoBehaviour
     private float jumpDuration;
     private float jumpHeight;
 
-    [SerializeField]
-    private AnimationClip clip;
+    //[SerializeField]
+    //private AnimationClip clip;
     public EnemyDefinition Definition => definition;
     public int Health => healthInitialized ? currentHealth : (definition != null ? definition.Health : 0);
     public float Attack => definition != null ? definition.Attack : 0f;
@@ -79,7 +79,12 @@ public class LaneTestEnemy : MonoBehaviour
             //Destroy(gameObject, clip.length);
             if (transform.GetChild(0).GetComponent<KillAndAnimation>() != null)
             {
+                //Debug.Log("doing this");
                 transform.GetChild(0).GetComponent<KillAndAnimation>().kill();
+            }
+            else
+            {
+                //Destroy(gameObject);
             }
         }
     }

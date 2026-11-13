@@ -14,8 +14,12 @@ public class KillAndAnimation : MonoBehaviour
 
     public void kill()
     {
+        //Debug.Log("in here");
         anim.SetBool("dead", true);
-        Destroy(gameObject.transform.parent.gameObject, clip.length);
+        if (anim.GetBool("dead"))
+        {
+            Destroy(gameObject.transform.parent.gameObject, clip.length);
+        }
     }
 
 }
