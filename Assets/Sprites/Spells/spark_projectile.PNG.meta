@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 50
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -97,13 +97,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: spark_vfx_0
+      name: spark_projectile_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 1000
-        height: 1000
+        x: 345
+        y: 308
+        width: 311
+        height: 385
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -112,20 +112,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 29ed50d2da1474ec889cc4fa866d0df4
-      internalID: -690615521
+      spriteID: 057d35865972b40cf8259faec850c24a
+      internalID: -1967755526
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: spark_vfx_1
+      name: spark_projectile_1
       rect:
         serializedVersion: 2
-        x: 1000
-        y: 0
-        width: 1000
-        height: 1000
+        x: 1356
+        y: 301
+        width: 289
+        height: 399
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -134,8 +134,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 80be98814cbe647b09f74c229eafc20d
-      internalID: -882876459
+      spriteID: cde6f357482b842c9b40f4c742502c07
+      internalID: 2063626713
       vertices: []
       indices: 
       edges: []
@@ -154,8 +154,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      spark_vfx_0: -690615521
-      spark_vfx_1: -882876459
+      spark_projectile_0: -1967755526
+      spark_projectile_1: 2063626713
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
