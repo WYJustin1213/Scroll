@@ -51,8 +51,8 @@ MonoBehaviour:
   maxTileRange: 8
   damage: 1
   projectileColor: {r: 1, g: 1, b: 1, a: 1}
-  hitEffectPrefab: {fileID: 1000004, guid: 3d9a6f1e8c2b4e7a9b50c4d1e7f2a863, type: 3}
-  hitEffectOffset: {x: 0, y: 1.6, z: 0}
+  hitEffectPrefab: {fileID: 1000004, guid: 167664f6508f943e393d36c6aea0224d, type: 3}
+  hitEffectOffset: {x: 0, y: 0, z: 0}
 --- !u!212 &1466755491599388440
 SpriteRenderer:
   m_ObjectHideFlags: 0
