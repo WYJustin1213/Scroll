@@ -763,7 +763,7 @@ MonoBehaviour:
   - lane: {fileID: 900100002}
     name: 1
   - lane: {fileID: 1421807192}
-    name: two
+    name: 2
   - lane: {fileID: 1378348393}
     name: 3
   - lane: {fileID: 132699244}
@@ -7535,7 +7535,7 @@ PrefabInstance:
       objectReference: {fileID: 1174268880}
     - target: {fileID: 4158220039148873678, guid: 261e0cb868f119249b9c46e2499b1b5d, type: 3}
       propertyPath: spawnInterval
-      value: 22
+      value: 33
       objectReference: {fileID: 0}
     - target: {fileID: 5238715821811073120, guid: 261e0cb868f119249b9c46e2499b1b5d, type: 3}
       propertyPath: m_Name
@@ -7914,7 +7914,7 @@ PrefabInstance:
       objectReference: {fileID: 1476947690}
     - target: {fileID: 4158220039148873678, guid: 261e0cb868f119249b9c46e2499b1b5d, type: 3}
       propertyPath: spawnInterval
-      value: 19
+      value: 32
       objectReference: {fileID: 0}
     - target: {fileID: 5238715821811073120, guid: 261e0cb868f119249b9c46e2499b1b5d, type: 3}
       propertyPath: m_Name
@@ -9278,7 +9278,7 @@ PrefabInstance:
       objectReference: {fileID: 593421268}
     - target: {fileID: 4158220039148873678, guid: 261e0cb868f119249b9c46e2499b1b5d, type: 3}
       propertyPath: spawnInterval
-      value: 20
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 5238715821811073120, guid: 261e0cb868f119249b9c46e2499b1b5d, type: 3}
       propertyPath: m_Name
@@ -10455,6 +10455,10 @@ PrefabInstance:
       propertyPath: spawnTile
       value: 
       objectReference: {fileID: 2137315111}
+    - target: {fileID: 4158220039148873678, guid: 261e0cb868f119249b9c46e2499b1b5d, type: 3}
+      propertyPath: spawnInterval
+      value: 29
+      objectReference: {fileID: 0}
     - target: {fileID: 5238715821811073120, guid: 261e0cb868f119249b9c46e2499b1b5d, type: 3}
       propertyPath: m_Name
       value: EnemySpawner
@@ -12167,7 +12171,7 @@ PrefabInstance:
       objectReference: {fileID: 1681961547}
     - target: {fileID: 4158220039148873678, guid: 261e0cb868f119249b9c46e2499b1b5d, type: 3}
       propertyPath: spawnInterval
-      value: 18
+      value: 27
       objectReference: {fileID: 0}
     - target: {fileID: 5238715821811073120, guid: 261e0cb868f119249b9c46e2499b1b5d, type: 3}
       propertyPath: m_Name
