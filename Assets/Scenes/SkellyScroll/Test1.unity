@@ -7534,6 +7534,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1174268880}
     - target: {fileID: 4158220039148873678, guid: 261e0cb868f119249b9c46e2499b1b5d, type: 3}
+      propertyPath: epicChance
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 4158220039148873678, guid: 261e0cb868f119249b9c46e2499b1b5d, type: 3}
+      propertyPath: rareChance
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 4158220039148873678, guid: 261e0cb868f119249b9c46e2499b1b5d, type: 3}
       propertyPath: spawnInterval
       value: 33
       objectReference: {fileID: 0}
@@ -9276,6 +9284,18 @@ PrefabInstance:
       propertyPath: spawnTile
       value: 
       objectReference: {fileID: 593421268}
+    - target: {fileID: 4158220039148873678, guid: 261e0cb868f119249b9c46e2499b1b5d, type: 3}
+      propertyPath: epicChance
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4158220039148873678, guid: 261e0cb868f119249b9c46e2499b1b5d, type: 3}
+      propertyPath: rareChance
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 4158220039148873678, guid: 261e0cb868f119249b9c46e2499b1b5d, type: 3}
+      propertyPath: commonChance
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 4158220039148873678, guid: 261e0cb868f119249b9c46e2499b1b5d, type: 3}
       propertyPath: spawnInterval
       value: 35
@@ -12169,6 +12189,14 @@ PrefabInstance:
       propertyPath: spawnTile
       value: 
       objectReference: {fileID: 1681961547}
+    - target: {fileID: 4158220039148873678, guid: 261e0cb868f119249b9c46e2499b1b5d, type: 3}
+      propertyPath: rareChance
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 4158220039148873678, guid: 261e0cb868f119249b9c46e2499b1b5d, type: 3}
+      propertyPath: commonChance
+      value: 60
+      objectReference: {fileID: 0}
     - target: {fileID: 4158220039148873678, guid: 261e0cb868f119249b9c46e2499b1b5d, type: 3}
       propertyPath: spawnInterval
       value: 27
