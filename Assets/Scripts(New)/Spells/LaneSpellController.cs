@@ -151,7 +151,7 @@ public class LaneSpellController : MonoBehaviour
             return false;
         }
 
-        if (spell.Function == SpellFunction.Sap)
+        if (spell.Function == SpellFunction.Effect)
         {
             if (!CastSap(spell))
                 return false;
@@ -166,14 +166,14 @@ public class LaneSpellController : MonoBehaviour
             return false;
         }
 
-        if (spell.ProjectilePrefab == null)
+        if (spell.sparkProjectilePrefab == null)
         {
             Debug.LogError("SpellDefinition \"" + spell.name + "\" has no projectile prefab.", spell);
             return false;
         }
 
         LaneFireballProjectile projectile = Instantiate(
-            spell.ProjectilePrefab,
+            spell.sparkProjectilePrefab,
             spawnPosition,
             Quaternion.identity
         );
@@ -182,7 +182,7 @@ public class LaneSpellController : MonoBehaviour
             return false;
 
         playerResources.SetMana(playerResources.Mana - spell.ManaCost);
-        nextCastTime = Time.time + spell.Cooldown;
+        nextCastTime = Time.time;
         if (uiManager != null)
             uiManager.HideUI();
 
@@ -223,7 +223,7 @@ public class LaneSpellController : MonoBehaviour
             Destroy(target);
 
         playerResources.SetMana(playerResources.Mana + 1 + targetsToDestroy.Count);
-        nextCastTime = Time.time + spell.Cooldown;
+        nextCastTime = Time.time;
         if (uiManager != null)
             uiManager.HideUI();
 
