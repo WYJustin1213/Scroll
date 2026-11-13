@@ -157,18 +157,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 2.75, y: 3.75}
   m_EdgeRadius: 0
---- !u!114 &7100000000000000001
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7916092552842785797}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e9a2c7f1b4d48a6932d0c8e7f1a3b5d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &7916092552842785797
 GameObject:
   m_ObjectHideFlags: 0
@@ -221,6 +209,7 @@ MonoBehaviour:
   lane: {fileID: 0}
   startTileIndex: 7
   manaDropYOffset: 2
+  clip: {fileID: 0}
 --- !u!114 &711342345863502871
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -235,3 +224,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   jumpDuration: 1
   jumpHeight: 3
+--- !u!114 &7100000000000000001
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7916092552842785797}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e9a2c7f1b4d48a6932d0c8e7f1a3b5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

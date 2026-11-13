@@ -51,6 +51,7 @@ MonoBehaviour:
   lane: {fileID: 0}
   startTileIndex: 7
   manaDropYOffset: 2
+  clip: {fileID: 0}
 --- !u!114 &7100000000000000001
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -20,6 +20,7 @@ MonoBehaviour:
   spriteOffset: 1.8
   manaPrefab: {fileID: 2886999126242463011, guid: 368b047b88e594b34a28f20da6f95b08, type: 3}
   ability: 1
+  spawnTier: 2
   enemyElement: 4
   immunities: 0
   weaknesses: 0

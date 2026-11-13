@@ -9,6 +9,13 @@ public enum EnemyElement
     None
 }
 
+public enum EnemySpawnTier
+{
+    Common,
+    Rare,
+    Epic
+}
+
 [CreateAssetMenu(fileName = "EnemyDefinition", menuName = "Scroll/Enemy Definition")]
 public class EnemyDefinition : ScriptableObject
 {
@@ -20,6 +27,7 @@ public class EnemyDefinition : ScriptableObject
     [SerializeField] private float spriteOffset = 1.1f;
     [SerializeField] private GameObject manaPrefab;
     [SerializeField] private bool ability;
+    [SerializeField] private EnemySpawnTier spawnTier = EnemySpawnTier.Common;
     public EnemyElement enemyElement;
     [SerializeField] private ElementImmunity immunities = ElementImmunity.None;
 
@@ -31,6 +39,7 @@ public class EnemyDefinition : ScriptableObject
     public bool IsImmuneTo(SpellElement element) => immunities.IsImmuneTo(element);
 
     public bool Ability => ability;
+    public EnemySpawnTier SpawnTier => spawnTier;
     public Sprite Sprite => sprite;
     public float MoveInterval => moveInterval;
     public int Health => health;
