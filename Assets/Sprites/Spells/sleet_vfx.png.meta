@@ -97,7 +97,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: stasis_vfx_0
+      name: sleet_vfx_0
       rect:
         serializedVersion: 2
         x: 0
@@ -112,14 +112,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1f6bb6cdc95b04842b1a45b415ef5e5d
-      internalID: 488663234
+      spriteID: fb90b00b5ce9b4c83b9f30a909198cab
+      internalID: 2053105529
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: stasis_vfx_1
+      name: sleet_vfx_1
       rect:
         serializedVersion: 2
         x: 1000
@@ -134,14 +134,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 068c5bc181ef542f4b9c511532064fe4
-      internalID: -860497121
+      spriteID: 7d41c7f4fb0ad490d94d74818d43eb3e
+      internalID: -1795845155
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: stasis_vfx_2
+      name: sleet_vfx_2
       rect:
         serializedVersion: 2
         x: 2000
@@ -156,14 +156,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a7557c726a7854d14935f40895d9b276
-      internalID: -799272823
+      spriteID: 153cc96f4583b4f659b0ccff2fa08107
+      internalID: -783518894
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: stasis_vfx_3
+      name: sleet_vfx_3
       rect:
         serializedVersion: 2
         x: 3000
@@ -178,14 +178,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 26c861f52ce2e4238af287358daf4fde
-      internalID: 596178792
+      spriteID: 5a506fc223a2f4960bd96896411e5576
+      internalID: 1128731727
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: stasis_vfx_4
+      name: sleet_vfx_4
       rect:
         serializedVersion: 2
         x: 4000
@@ -200,8 +200,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7ac0be2e293a24944871c7280c37d0a5
-      internalID: -2033792419
+      spriteID: 4e23407340e6b491081be30c643bbf85
+      internalID: -1716540202
       vertices: []
       indices: 
       edges: []
@@ -220,11 +220,11 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      stasis_vfx_0: 488663234
-      stasis_vfx_1: -860497121
-      stasis_vfx_2: -799272823
-      stasis_vfx_3: 596178792
-      stasis_vfx_4: -2033792419
+      sleet_vfx_0: 2053105529
+      sleet_vfx_1: -1795845155
+      sleet_vfx_2: -783518894
+      sleet_vfx_3: 1128731727
+      sleet_vfx_4: -1716540202
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

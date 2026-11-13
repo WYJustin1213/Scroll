@@ -103,7 +103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lifetime: 0.5
-  hitSound: {fileID: 8300000, guid: 771196379d0974d9e9846e57de83400f, type: 3}
+  hitSound: {fileID: 8300000, guid: 796c7f30a5cfc40c3a756dd229f55318, type: 3}
 --- !u!95 &-1097866048493226813
 Animator:
   serializedVersion: 7

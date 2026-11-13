@@ -97,7 +97,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: stasis_rune_0
+      name: sleet_rune_0
       rect:
         serializedVersion: 2
         x: 1000
@@ -112,14 +112,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b68ad7649f86649618e4b19c645199f2
-      internalID: 538503893
+      spriteID: 418a4d5ffe17d45c792b685cc4bc6467
+      internalID: 514642900
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: stasis_rune_1
+      name: sleet_rune_1
       rect:
         serializedVersion: 2
         x: 2000
@@ -134,14 +134,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 85be5a486aa6748828f0f4fbbbb75035
-      internalID: 616238671
+      spriteID: db99b10e5982f4209a705b9673a3ded9
+      internalID: 731416198
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: stasis_rune_2
+      name: sleet_rune_2
       rect:
         serializedVersion: 2
         x: 3000
@@ -156,14 +156,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6a9f325fb948c49d48e3802ad66a11fd
-      internalID: -811343332
+      spriteID: f2a2ee675695d49f7a9dd5b754066c1f
+      internalID: 1374172560
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: stasis_rune_3
+      name: sleet_rune_3
       rect:
         serializedVersion: 2
         x: 0
@@ -178,14 +178,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e616c5dbbf0a1477d802396f0d6a4c0a
-      internalID: -1918847388
+      spriteID: 75f6623db3d164bd182dcba69ff9813f
+      internalID: -38297180
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: stasis_rune_4
+      name: sleet_rune_4
       rect:
         serializedVersion: 2
         x: 1000
@@ -200,14 +200,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 78e01d41371e74b6280c51596a4d4a96
-      internalID: -393066844
+      spriteID: 06fa0d9f1d1aa4adcb4e12e66ffe8c5a
+      internalID: -733339077
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: stasis_rune_5
+      name: sleet_rune_5
       rect:
         serializedVersion: 2
         x: 2000
@@ -222,14 +222,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 18afbdf952d5b4abd8399df479385f6d
-      internalID: -1836092458
+      spriteID: 792748c32b351416d9c3e45a81fc84ab
+      internalID: -472277536
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: stasis_rune_6
+      name: sleet_rune_6
       rect:
         serializedVersion: 2
         x: 3000
@@ -244,14 +244,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ea4bc1ba3d2bd4beda9f11f3ff3082c5
-      internalID: -788328061
+      spriteID: 7f6f1653c51724b9bb85176eb0aaa8cc
+      internalID: -610434021
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: stasis_rune_7
+      name: sleet_rune_7
       rect:
         serializedVersion: 2
         x: 0
@@ -266,14 +266,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: db14aacf2d978411fa84b2eb1a6b2ecc
-      internalID: -996534463
+      spriteID: 84fb6549e12264a7995adb58619a4b90
+      internalID: -1528816403
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: stasis_rune_8
+      name: sleet_rune_8
       rect:
         serializedVersion: 2
         x: 1000
@@ -288,14 +288,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 08afacbffd865423586140832bdef0c7
-      internalID: 1478840684
+      spriteID: 7d95907fb5e504d5a9a9a1a5f3e38c3d
+      internalID: 35752157
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: stasis_rune_9
+      name: sleet_rune_9
       rect:
         serializedVersion: 2
         x: 2000
@@ -310,8 +310,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 023950123e290402a870b7c54fc8cbf5
-      internalID: 804676605
+      spriteID: 6aad9867080df4533b38df45c3a84a37
+      internalID: 247305437
       vertices: []
       indices: 
       edges: []
@@ -330,16 +330,16 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      stasis_rune_0: 538503893
-      stasis_rune_1: 616238671
-      stasis_rune_2: -811343332
-      stasis_rune_3: -1918847388
-      stasis_rune_4: -393066844
-      stasis_rune_5: -1836092458
-      stasis_rune_6: -788328061
-      stasis_rune_7: -996534463
-      stasis_rune_8: 1478840684
-      stasis_rune_9: 804676605
+      sleet_rune_0: 514642900
+      sleet_rune_1: 731416198
+      sleet_rune_2: 1374172560
+      sleet_rune_3: -38297180
+      sleet_rune_4: -733339077
+      sleet_rune_5: -472277536
+      sleet_rune_6: -610434021
+      sleet_rune_7: -1528816403
+      sleet_rune_8: 35752157
+      sleet_rune_9: 247305437
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
