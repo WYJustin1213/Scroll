@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 [ExecuteAlways]
 [DisallowMultipleComponent]
@@ -16,6 +17,7 @@ public class LaneTestEnemy : MonoBehaviour
     private LaneTile currentTile;
     private float moveTimer;
     private bool dead;
+    private bool hit;
     private int currentHealth;
     private bool healthInitialized;
     private bool jumping;
@@ -35,6 +37,9 @@ public class LaneTestEnemy : MonoBehaviour
 
     public void TakeDamage(int amount, SpellElement element = SpellElement.None)
     {
+        hit = true;
+        spriteRenderer.color = Color.red;
+        StartCoroutine(damageFlash());
         if (dead || amount <= 0)
             return;
 
@@ -73,6 +78,11 @@ public class LaneTestEnemy : MonoBehaviour
 
             Destroy(gameObject);
         }
+    }
+    IEnumerator damageFlash() {
+        yield return new WaitForSeconds(0.3f);
+        spriteRenderer.color = Color.white;
+        hit = false;
     }
 
     public bool InitializeAtTile(LaneManager spawnLane, LaneTile spawnTile)
