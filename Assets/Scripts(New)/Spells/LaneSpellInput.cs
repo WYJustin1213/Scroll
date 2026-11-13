@@ -28,13 +28,6 @@ public class LaneSpellInput : MonoBehaviour
         {
             lanes.AddRange(FindObjectsByType<LaneSpellPoint>(FindObjectsSortMode.None));
         }
-
-        lanes.Sort((a, b) =>
-        {
-            string aName = a != null ? CommandTextNormalizer.Normalize(a.LaneName) : string.Empty;
-            string bName = b != null ? CommandTextNormalizer.Normalize(b.LaneName) : string.Empty;
-            return bName.Length.CompareTo(aName.Length);
-        });
     }
 
     private void OnEnable()
@@ -133,13 +126,20 @@ public class LaneSpellInput : MonoBehaviour
         if (spellDatabase.TryFindSpell(typed, out spell) && !spell.Directional)
             return true;
 
+        lanes.Sort((a, b) =>
+        {
+            string aName = a != null ? CommandTextNormalizer.Normalize(GetLaneName(a)) : string.Empty;
+            string bName = b != null ? CommandTextNormalizer.Normalize(GetLaneName(b)) : string.Empty;
+            return bName.Length.CompareTo(aName.Length);
+        });
+
         for (int i = 0; i < lanes.Count; i++)
         {
             LaneSpellPoint lane = lanes[i];
             if (lane == null)
                 continue;
 
-            string laneName = CommandTextNormalizer.Normalize(lane.LaneName);
+            string laneName = CommandTextNormalizer.Normalize(GetLaneName(lane));
             if (laneName.Length == 0 ||
                 !TryGetSpellText(typed, laneName, out string spellText))
                 continue;
@@ -152,6 +152,13 @@ public class LaneSpellInput : MonoBehaviour
         }
 
         return false;
+    }
+
+    private static string GetLaneName(LaneSpellPoint lane)
+    {
+        return CombatManager.Instance != null
+            ? CombatManager.Instance.GetLaneName(lane)
+            : lane.LaneName;
     }
 
     private static bool TryGetSpellText(string input, string laneName, out string spellText)
