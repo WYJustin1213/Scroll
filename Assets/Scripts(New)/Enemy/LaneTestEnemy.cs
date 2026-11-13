@@ -14,6 +14,7 @@ public class LaneTestEnemy : MonoBehaviour
 
     private SpriteRenderer spriteRenderer;
     private LaneTile currentTile;
+    //private Animator anim;
     private float moveTimer;
     private bool dead;
     private int currentHealth;
@@ -24,6 +25,8 @@ public class LaneTestEnemy : MonoBehaviour
     private float jumpDuration;
     private float jumpHeight;
 
+    [SerializeField]
+    private AnimationClip clip;
     public EnemyDefinition Definition => definition;
     public int Health => healthInitialized ? currentHealth : (definition != null ? definition.Health : 0);
     public float Attack => definition != null ? definition.Attack : 0f;
@@ -71,7 +74,13 @@ public class LaneTestEnemy : MonoBehaviour
                 }
             }
 
-            Destroy(gameObject);
+            //override = new AnimatorOverrideController(animator.runtimeAnimatorController);
+            //anim.SetBool("dead", true);
+            //Destroy(gameObject, clip.length);
+            if (transform.GetChild(0).GetComponent<KillAndAnimation>() != null)
+            {
+                transform.GetChild(0).GetComponent<KillAndAnimation>().kill();
+            }
         }
     }
 

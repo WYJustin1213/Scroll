@@ -51,6 +51,7 @@ MonoBehaviour:
   lane: {fileID: 0}
   startTileIndex: 7
   manaDropYOffset: 2
+  clip: {fileID: 0}
 --- !u!114 &7100000000000000001
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -75,6 +76,7 @@ GameObject:
   - component: {fileID: 3365292584433713735}
   - component: {fileID: 3756893280109053623}
   - component: {fileID: 8344263465665346028}
+  - component: {fileID: 4201987861095703824}
   m_Layer: 8
   m_Name: Sprite
   m_TagString: Untagged
@@ -220,3 +222,16 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &4201987861095703824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9207595136345071695}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aeedc7e207e8c1b4082814fdca0d198b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clip: {fileID: 7400000, guid: 5040c69ed96fc4c87989b80ce763a378, type: 2}
