@@ -4808,7 +4808,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '"Spark lane " + lane #  - Shoot fireball
+  m_text: '"Spark" + lane #  - Shoot fireball
 
 '
   m_isRightToLeft: 0
