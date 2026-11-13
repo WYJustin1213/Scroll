@@ -84,7 +84,7 @@ public class LaneTestEnemy : MonoBehaviour
             }
             else
             {
-                //Destroy(gameObject);
+                Destroy(gameObject);
             }
         }
     }
