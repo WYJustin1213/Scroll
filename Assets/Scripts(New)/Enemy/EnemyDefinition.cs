@@ -23,7 +23,7 @@ public class EnemyDefinition : ScriptableObject
     [SerializeField, Min(0.01f)] private float moveInterval = 1f;
     [SerializeField, Min(1)] private int health = 10;
     [SerializeField, Min(0f)] private float attack = 1f;
-    [SerializeField, Min(1)] private int drop = 1;
+    [SerializeField, Min(0)] private int drop = 1;
     [SerializeField] private float spriteOffset = 1.1f;
     [SerializeField] private GameObject manaPrefab;
     [SerializeField] private bool ability;
