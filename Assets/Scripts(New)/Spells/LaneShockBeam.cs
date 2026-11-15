@@ -9,6 +9,7 @@ public class LaneShockBeam : MonoBehaviour
     [SerializeField, Min(0.01f)] private float moveSpeed = 16f;
     [SerializeField, Min(1)] private int maxTileRange = 8;
     [SerializeField, Min(1)] private int damage = 1;
+    [SerializeField, Min(1)] private int detectionRange = 1;
 
     [Header("Trail")]
     [SerializeField] private Sprite trailSprite;
@@ -170,7 +171,7 @@ public class LaneShockBeam : MonoBehaviour
         LaneManager lane = current.Lane;
         int currentTileIndex = current.CurrentTile.Index;
         Vector3 position = current.transform.position;
-        LaneTestEnemy behind = FindEnemyOnTile(lane, currentTileIndex + 1, position, hitEnemies);
+        LaneTestEnemy behind = FindEnemyOnTile(lane, currentTileIndex + detectionRange, position, hitEnemies);
         if (behind != null)
             return behind;
 

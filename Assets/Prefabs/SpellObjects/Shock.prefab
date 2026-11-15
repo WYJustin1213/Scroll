@@ -47,6 +47,7 @@ MonoBehaviour:
   moveSpeed: 16
   maxTileRange: 8
   damage: 1
+  detectionRange: 2
   trailSprite: {fileID: 1512204940, guid: 8d4825bd9d72047f68d32f6ecf76f380, type: 3}
   trailSpacing: 2
   trailScale: 0.2
