@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5693892340522033523}
   - component: {fileID: 1135611170972369795}
   m_Layer: 0
-  m_Name: LaneSpark
+  m_Name: Spark
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
