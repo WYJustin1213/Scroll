@@ -75,7 +75,13 @@ public class LaneTestEnemy : MonoBehaviour
                     float offset = i - (definition.Drop - 1) / 2f;
                     Vector3 manaPosition = transform.position + Vector3.up * manaDropYOffset
                         + ManaDropSpacing * offset;
-                    Instantiate(definition.ManaPrefab, manaPosition, Quaternion.identity);
+                    GameObject manaDrop = Instantiate(
+                        definition.ManaPrefab,
+                        manaPosition,
+                        Quaternion.identity
+                    );
+                    if (lane != null)
+                        manaDrop.transform.SetParent(lane.transform, true);
                 }
             }
 

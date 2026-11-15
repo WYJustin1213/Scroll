@@ -18,9 +18,11 @@ MonoBehaviour:
   commandText: Sap
   aliases: []
   function: 1
-  directional: 0
-  projectilePrefab: {fileID: 0}
-  sapTargetPrefab: {fileID: 2886999126242463011, guid: 368b047b88e594b34a28f20da6f95b08, type: 3}
-  cooldown: 0
-  manaCost: 0
   spellElement: 4
+  manaCost: 0
+  directional: 1
+  SparkProjectilePrefab: {fileID: 0}
+  SleetProjectilePrefab: {fileID: 0}
+  sapTargetPrefab: {fileID: 2886999126242463011, guid: 368b047b88e594b34a28f20da6f95b08, type: 3}
+  SpoutBeamPrefab: {fileID: 0}
+  ShockBeamPrefab: {fileID: 0}

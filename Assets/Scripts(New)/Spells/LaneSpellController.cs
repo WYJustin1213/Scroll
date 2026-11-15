@@ -73,10 +73,12 @@ public class LaneSpellController : MonoBehaviour
             return false;
         }
 
-        if (!spell.Directional)
+        if (!spell.Directional && spell.Function != SpellFunction.Effect)
             return TryCast(spell, null, 0, Vector3.zero);
 
-        if (point == null || point.Lane == null || point.Lane.GetTile(0) == null)
+        if (point == null ||
+            point.Lane == null ||
+            (spell.Directional && point.Lane.GetTile(0) == null))
         {
             Debug.LogError("LaneSpellController needs a lane spell point with a valid lane.", this);
             return false;
@@ -86,7 +88,7 @@ public class LaneSpellController : MonoBehaviour
             spell,
             point.Lane,
             0,
-            point.SpellOrigin.position
+            spell.Directional ? point.SpellOrigin.position : Vector3.zero
         );
     }
 
@@ -133,7 +135,13 @@ public class LaneSpellController : MonoBehaviour
         if (Time.time < nextCastTime)
             return false;
 
-        if (spell.Directional && (lane == null || lane.GetTile(firstTileIndex) == null))
+        if ((spell.Directional || spell.Function == SpellFunction.Effect) && lane == null)
+        {
+            Debug.LogError("Spell target lane is not available.", this);
+            return false;
+        }
+
+        if (spell.Directional && lane.GetTile(firstTileIndex) == null)
         {
             Debug.LogError("Spell target lane does not have a valid starting tile.", this);
             return false;
@@ -151,9 +159,9 @@ public class LaneSpellController : MonoBehaviour
             return false;
         }
 
-        if (spell.Function == SpellFunction.Sap)
+        if (spell.Function == SpellFunction.Effect)
         {
-            if (!CastSap(spell))
+            if (!CastSap(spell, lane))
                 return false;
 
             SpellCast?.Invoke(this);
@@ -166,23 +174,45 @@ public class LaneSpellController : MonoBehaviour
             return false;
         }
 
-        if (spell.ProjectilePrefab == null)
+        if (spell.Function == SpellFunction.Beam)
         {
-            Debug.LogError("SpellDefinition \"" + spell.name + "\" has no projectile prefab.", spell);
-            return false;
+            if (spell.shockBeamPrefab == null)
+            {
+                Debug.LogError("SpellDefinition \"" + spell.name + "\" has no shock beam prefab.", spell);
+                return false;
+            }
+
+            LaneShockBeam beam = Instantiate(
+                spell.shockBeamPrefab,
+                spawnPosition,
+                Quaternion.identity
+            );
+
+            if (!beam.Initialize(
+                lane, firstTileIndex, spell.spellElement,
+                spell.ShockTrailPositionOffset, spell.ShockTrailRotation))
+                return false;
+        }
+        else
+        {
+            if (spell.sparkProjectilePrefab == null)
+            {
+                Debug.LogError("SpellDefinition \"" + spell.name + "\" has no projectile prefab.", spell);
+                return false;
+            }
+
+            LaneFireballProjectile projectile = Instantiate(
+                spell.sparkProjectilePrefab,
+                spawnPosition,
+                Quaternion.identity
+            );
+
+            if (!projectile.Initialize(lane, firstTileIndex, spell.spellElement))
+                return false;
         }
 
-        LaneFireballProjectile projectile = Instantiate(
-            spell.ProjectilePrefab,
-            spawnPosition,
-            Quaternion.identity
-        );
-
-        if (!projectile.Initialize(lane, firstTileIndex, spell.spellElement))
-            return false;
-
         playerResources.SetMana(playerResources.Mana - spell.ManaCost);
-        nextCastTime = Time.time + spell.Cooldown;
+        nextCastTime = Time.time;
         if (uiManager != null)
             uiManager.HideUI();
 
@@ -190,7 +220,7 @@ public class LaneSpellController : MonoBehaviour
         return true;
     }
 
-    private bool CastSap(SpellDefinition spell)
+    private bool CastSap(SpellDefinition spell, LaneManager lane)
     {
         GameObject targetPrefab = spell.TargetPrefab;
         HashSet<GameObject> targetsToDestroy = new HashSet<GameObject>();
@@ -204,6 +234,7 @@ public class LaneSpellController : MonoBehaviour
             if (targetPrefab != null &&
                 target != null &&
                 target.SourcePrefab == targetPrefab &&
+                (!target.CompareTag("DropMana") || IsInLane(target.transform, lane)) &&
                 target.TryConsume())
                 targetsToDestroy.Add(target.gameObject);
         }
@@ -215,7 +246,7 @@ public class LaneSpellController : MonoBehaviour
         for (int i = 0; i < sceneObjects.Length; i++)
         {
             GameObject target = sceneObjects[i].gameObject;
-            if (target.CompareTag("DropMana"))
+            if (target.CompareTag("DropMana") && IsInLane(target.transform, lane))
                 targetsToDestroy.Add(target);
         }
 
@@ -223,10 +254,15 @@ public class LaneSpellController : MonoBehaviour
             Destroy(target);
 
         playerResources.SetMana(playerResources.Mana + 1 + targetsToDestroy.Count);
-        nextCastTime = Time.time + spell.Cooldown;
+        nextCastTime = Time.time;
         if (uiManager != null)
             uiManager.HideUI();
 
         return true;
+    }
+
+    private static bool IsInLane(Transform target, LaneManager lane)
+    {
+        return target != null && lane != null && target.IsChildOf(lane.transform);
     }
 }

@@ -14,7 +14,7 @@ public class LaneSpellInput : MonoBehaviour
     [SerializeField] private List<LaneSpellPoint> lanes = new List<LaneSpellPoint>();
 
     [Header("Behavior")]
-    [Tooltip("Cast as soon as the typed text matches a spell and, when directional, a lane.")]
+    [Tooltip("Cast as soon as the typed text matches a spell and, when lane-targeted, a lane.")]
     [SerializeField] private bool castWhenTyped = true;
     [SerializeField] private bool castOnSubmit = true;
     [SerializeField] private bool clearAfterCast = true;
@@ -123,7 +123,9 @@ public class LaneSpellInput : MonoBehaviour
 
         string typed = NormalizeInput(text);
 
-        if (spellDatabase.TryFindSpell(typed, out spell) && !spell.Directional)
+        if (spellDatabase.TryFindSpell(typed, out spell) &&
+            !spell.Directional &&
+            spell.Function != SpellFunction.Effect)
             return true;
 
         lanes.Sort((a, b) =>
@@ -144,7 +146,8 @@ public class LaneSpellInput : MonoBehaviour
                 !TryGetSpellText(typed, laneName, out string spellText))
                 continue;
 
-            if (spellDatabase.TryFindSpell(spellText, out spell) && spell.Directional)
+            if (spellDatabase.TryFindSpell(spellText, out spell) &&
+                (spell.Directional || spell.Function == SpellFunction.Effect))
             {
                 match = lane;
                 return true;
