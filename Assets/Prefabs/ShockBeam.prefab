@@ -48,8 +48,8 @@ MonoBehaviour:
   maxTileRange: 8
   damage: 1
   trailSprite: {fileID: 1512204940, guid: 8d4825bd9d72047f68d32f6ecf76f380, type: 3}
-  trailSpacing: 0.35
-  trailScale: 0.1
+  trailSpacing: 2
+  trailScale: 0.2
   fadeDuration: 0.5
-  hitEffectPrefab: {fileID: 1000001, guid: 1504a373692024906af1d906d7bde0fc, type: 3}
+  hitEffectPrefab: {fileID: 1000004, guid: 1504a373692024906af1d906d7bde0fc, type: 3}
   hitEffectOffset: {x: 0, y: 0.5, z: 0}

@@ -131,16 +131,104 @@ public class LaneShockBeamTests
         AssertTrailTransform(root.GetChild(0), point.transform.position + offset, rotation);
 
         Vector3 chainEnd = new Vector3(3f, 1f, 5f);
-        clone.GetType().GetMethod("AddTrailBetween", PrivateInstance)
-            .Invoke(clone, new object[] { Vector3.zero, chainEnd });
-        AssertTrailTransform(root.GetChild(root.childCount - 1), chainEnd + offset, rotation);
+        clone.GetType().GetMethod("AddTrailAlongSegment", PrivateInstance)
+            .Invoke(clone, new object[] { Vector3.zero, chainEnd, 0.35f });
+        Vector3 lastPosition = chainEnd.normalized * (Mathf.Floor(chainEnd.magnitude / 0.35f) * 0.35f);
+        Quaternion chainRotation = Quaternion.LookRotation(new Vector3(3f, 0f, 5f)) * Quaternion.Euler(rotation);
+        AssertTrailTransform(root.GetChild(root.childCount - 1), lastPosition + offset, chainRotation);
         yield return null;
+    }
+
+    [Test]
+    public void TrailSpacingCarriesAcrossSegmentsAndChainTurns()
+    {
+        Transform root = NewObject("Trail root").transform;
+        Set(beam, "trailRoot", root);
+        Set(beam, "trailSpacing", 2f);
+        Set(beam, "trailRotation", Quaternion.identity);
+        MethodInfo addSegment = beam.GetType().GetMethod("AddTrailAlongSegment", PrivateInstance);
+        float remaining = 2f;
+
+        void AddSegment(Vector3 start, Vector3 end)
+        {
+            object[] args = { start, end, remaining };
+            addSegment.Invoke(beam, args);
+            remaining = (float)args[2];
+        }
+
+        AddSegment(Vector3.zero, Vector3.forward * 0.75f);
+        Assert.That(root.childCount, Is.EqualTo(0));
+        AddSegment(Vector3.forward * 0.75f, Vector3.forward * 2.5f);
+        AddSegment(Vector3.forward * 2.5f, Vector3.forward * 5.5f);
+        AddSegment(Vector3.forward * 5.5f, Vector3.forward * 5.5f + Vector3.right * 2f);
+
+        Assert.That(root.childCount, Is.EqualTo(3));
+        AssertTrailTransform(root.GetChild(0), Vector3.forward * 2f, Vector3.zero);
+        AssertTrailTransform(root.GetChild(1), Vector3.forward * 4f, Vector3.zero);
+        AssertTrailTransform(root.GetChild(2), Vector3.forward * 5.5f + Vector3.right * 0.5f, Quaternion.LookRotation(Vector3.right));
+        Assert.That(remaining, Is.EqualTo(0.5f).Within(0.0001f));
+    }
+
+    [TestCase(0f, 0f, 1f, 0f)]
+    [TestCase(1f, 0f, 0f, 90f)]
+    [TestCase(-1f, 0f, 0f, -90f)]
+    [TestCase(0f, 0f, -1f, 180f)]
+    [TestCase(0f, 1f, 0f, 0f)]
+    public void TrailFacesSegmentDirectionWithConfiguredRotation(
+        float x, float y, float z, float yaw)
+    {
+        Transform root = NewObject("Direction trail").transform;
+        Quaternion offset = Quaternion.Euler(90f, 15f, 90f);
+        Set(beam, "trailRoot", root);
+        Set(beam, "trailSpacing", 1f);
+        Set(beam, "trailRotation", offset);
+
+        object[] args = { Vector3.zero, new Vector3(x, y, z) * 2f, 1f };
+        beam.GetType().GetMethod("AddTrailAlongSegment", PrivateInstance).Invoke(beam, args);
+
+        Assert.That(root.childCount, Is.EqualTo(2));
+        AssertTrailTransform(root.GetChild(0), new Vector3(x, y, z), Quaternion.Euler(0f, yaw, 0f) * offset);
+        AssertTrailTransform(root.GetChild(1), new Vector3(x, y, z) * 2f, Quaternion.Euler(0f, yaw, 0f) * offset);
+    }
+
+    [Test]
+    public void ChainContinuesTravelSpacingAcrossMultipleTargets()
+    {
+        Object definition = ScriptableObject.CreateInstance(RuntimeType("EnemyDefinition"));
+        objects.Add(definition);
+        Set(definition, "health", 10);
+        Component first = CreateEnemy(lanes[0], 1);
+        Component behind = CreateEnemy(lanes[0], 2);
+        Component adjacent = CreateEnemy(lanes[1], 2);
+        Set(first, "definition", definition);
+        Set(behind, "definition", definition);
+        Set(adjacent, "definition", definition);
+
+        Transform root = NewObject("Chain trail").transform;
+        Set(beam, "trailRoot", root);
+        Set(beam, "trailSpacing", 2f);
+        Set(beam, "trailRotation", Quaternion.identity);
+        beam.transform.position = first.transform.position;
+
+        object[] args = { first, 1.5f };
+        beam.GetType().GetMethod("ChainFrom", PrivateInstance).Invoke(beam, args);
+
+        Assert.That(root.childCount, Is.EqualTo(3));
+        AssertTrailTransform(root.GetChild(0), new Vector3(0f, 0.5f, 4.5f), Vector3.zero);
+        AssertTrailTransform(root.GetChild(1), new Vector3(0.5f, 0.5f, 6f), Quaternion.LookRotation(Vector3.right));
+        AssertTrailTransform(root.GetChild(2), new Vector3(2.5f, 0.5f, 6f), Quaternion.LookRotation(Vector3.right));
+        Assert.That((float)args[1], Is.EqualTo(1.5f).Within(0.0001f));
     }
 
     private static void AssertTrailTransform(Transform segment, Vector3 position, Vector3 rotation)
     {
+        AssertTrailTransform(segment, position, Quaternion.Euler(rotation));
+    }
+
+    private static void AssertTrailTransform(Transform segment, Vector3 position, Quaternion rotation)
+    {
         Assert.That(Vector3.Distance(segment.position, position), Is.LessThan(0.0001f));
-        Assert.That(Quaternion.Angle(segment.rotation, Quaternion.Euler(rotation)), Is.LessThan(0.01f));
+        Assert.That(Quaternion.Angle(segment.rotation, rotation), Is.LessThan(0.01f));
     }
 
     private static void Set(Object instance, string field, object value) =>

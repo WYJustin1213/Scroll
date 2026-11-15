@@ -12,7 +12,8 @@ public class LaneShockBeam : MonoBehaviour
 
     [Header("Trail")]
     [SerializeField] private Sprite trailSprite;
-    [SerializeField, Min(0.01f)] private float trailSpacing = 0.35f;
+    [SerializeField, Min(0.01f), Tooltip("Distance in world units between consecutive trail sprites, along the beam's path.")]
+    private float trailSpacing = 0.35f;
     [SerializeField, Min(0.01f)] private float trailScale = 0.1f;
     [SerializeField, Min(0f)] private float fadeDuration = 0.5f;
 
@@ -25,6 +26,7 @@ public class LaneShockBeam : MonoBehaviour
     private Transform trailRoot;
     private Vector3 trailPositionOffset;
     private Quaternion trailRotation;
+    private Vector3 trailDirection = Vector3.forward;
     private Dictionary<LaneTestEnemy, Vector3> enemyPositions =
         new Dictionary<LaneTestEnemy, Vector3>();
     private Dictionary<LaneTestEnemy, Vector3> currentEnemyPositions =
@@ -65,6 +67,16 @@ public class LaneShockBeam : MonoBehaviour
             Destroy(gameObject);
             return false;
         }
+
+        Vector3 initialDirection = lane.GetTile(firstTileIndex).StandPosition - transform.position;
+        initialDirection.y = 0f;
+        if (initialDirection.sqrMagnitude < 0.0001f)
+        {
+            initialDirection = lane.transform.forward;
+            initialDirection.y = 0f;
+        }
+        if (initialDirection.sqrMagnitude >= 0.0001f)
+            trailDirection = initialDirection;
 
         trailRoot = new GameObject("Shock Trail").transform;
         CreateTrailSprite(transform.position);
@@ -110,7 +122,7 @@ public class LaneShockBeam : MonoBehaviour
                 transform.position = endPosition;
                 if (enemy != null)
                 {
-                    ChainFrom(enemy);
+                    ChainFrom(enemy, ref distanceUntilNextSprite);
                     yield return FadeTrail();
                     yield break;
                 }
@@ -127,7 +139,7 @@ public class LaneShockBeam : MonoBehaviour
         yield return FadeTrail();
     }
 
-    private void ChainFrom(LaneTestEnemy firstEnemy)
+    private void ChainFrom(LaneTestEnemy firstEnemy, ref float distanceUntilNextSprite)
     {
         var hitEnemies = new HashSet<LaneTestEnemy>();
         LaneTestEnemy current = firstEnemy;
@@ -144,7 +156,7 @@ public class LaneShockBeam : MonoBehaviour
             if (next == null)
                 return;
 
-            AddTrailBetween(transform.position, next.transform.position);
+            AddTrailAlongSegment(transform.position, next.transform.position, ref distanceUntilNextSprite);
             transform.position = next.transform.position;
             current = next;
         }
@@ -228,20 +240,6 @@ public class LaneShockBeam : MonoBehaviour
         return closest;
     }
 
-    private void AddTrailBetween(Vector3 start, Vector3 end)
-    {
-        Vector3 difference = end - start;
-        float distance = difference.magnitude;
-        if (distance <= 0f)
-            return;
-
-        Vector3 direction = difference / distance;
-        for (float offset = trailSpacing; offset < distance; offset += trailSpacing)
-            CreateTrailSprite(start + direction * offset);
-
-        CreateTrailSprite(end);
-    }
-
     private void AddTrailAlongSegment(Vector3 start, Vector3 end, ref float distanceUntilNextSprite)
     {
         Vector3 difference = end - start;
@@ -250,6 +248,11 @@ public class LaneShockBeam : MonoBehaviour
             return;
 
         Vector3 direction = difference / distance;
+        Vector3 flatDirection = difference;
+        flatDirection.y = 0f;
+        if (flatDirection.sqrMagnitude >= 0.0001f)
+            trailDirection = flatDirection;
+
         float traveled = 0f;
         while (distanceUntilNextSprite <= distance - traveled)
         {
@@ -264,7 +267,10 @@ public class LaneShockBeam : MonoBehaviour
     private void CreateTrailSprite(Vector3 position)
     {
         GameObject segment = new GameObject("Shock Trail Sprite");
-        segment.transform.SetPositionAndRotation(position + trailPositionOffset, trailRotation);
+        segment.transform.SetPositionAndRotation(
+            position + trailPositionOffset,
+            Quaternion.LookRotation(trailDirection) * trailRotation
+        );
         segment.transform.localScale = Vector3.one * trailScale;
         segment.transform.SetParent(trailRoot, true);
 

@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Shock
   m_EditorClassIdentifier: 
   displayName: Shock
-  description: Sends an electric beam down the selected lane and chains to nearby enemies.
+  description: Sends an electric beam down the selected lane and chains to nearby
+    enemies.
   commandText: Shock
   aliases: []
   function: 2
@@ -25,3 +26,5 @@ MonoBehaviour:
   sapTargetPrefab: {fileID: 0}
   SpoutBeamPrefab: {fileID: 0}
   ShockBeamPrefab: {fileID: 11400000, guid: f3d8459415224b3fac2426034b420e43, type: 3}
+  shockTrailPositionOffset: {x: 0, y: 2, z: 0}
+  shockTrailRotation: {x: 90, y: 0, z: 90}

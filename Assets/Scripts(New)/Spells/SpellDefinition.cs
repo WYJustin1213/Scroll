@@ -48,7 +48,7 @@ public class SpellDefinition : ScriptableObject
     [SerializeField] private LaneShockBeam ShockBeamPrefab;
     [SerializeField, Tooltip("World-space offset applied to each shock trail sprite.")]
     private Vector3 shockTrailPositionOffset;
-    [SerializeField, Tooltip("World-space Euler rotation applied to each shock trail sprite.")]
+    [SerializeField, Tooltip("Euler rotation offset applied after aligning shock trail sprites with their travel direction.")]
     private Vector3 shockTrailRotation;
 
     public SpellFunction Function => function;
