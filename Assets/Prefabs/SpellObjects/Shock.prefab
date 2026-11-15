@@ -44,9 +44,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3c8814aa8a4a614786429a39893efe3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 15
+<<<<<<< Updated upstream
+  moveSpeed: 16
+=======
+  moveSpeed: 13
+>>>>>>> Stashed changes
   maxTileRange: 8
   damage: 1
+  detectionRange: 2
   trailSprite: {fileID: 1512204940, guid: 8d4825bd9d72047f68d32f6ecf76f380, type: 3}
   trailSpacing: 2
   trailScale: 0.2
