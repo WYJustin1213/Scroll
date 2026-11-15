@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 [DisallowMultipleComponent]
 [RequireComponent(typeof(LaneTestEnemy))]
@@ -13,10 +14,13 @@ public class EnemyAttack : MonoBehaviour
     private float waitedAtTile;
     private float enlargedUntil;
     private bool enlarged;
+    [SerializeField]private GameObject damageFX;
+    private GameObject canvas;
 
     private void Awake()
     {
         enemy = GetComponent<LaneTestEnemy>();
+        canvas = GameObject.Find("Canvas");
     }
 
     private void OnDisable()
@@ -92,6 +96,7 @@ public class EnemyAttack : MonoBehaviour
             if (visual == null)
                 return;
         }
+        Instantiate(damageFX, canvas.transform);
 
         if (!enlarged)
             baseScale = visual.localScale;
