@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -26,9 +27,19 @@ public class PlayerHealth : MonoBehaviour
         CurrentHealth = Mathf.Max(0, CurrentHealth - amount);
         HealthChanged?.Invoke(CurrentHealth, maxHealth);
 
-        if (CurrentHealth == 0)
+        //Debug.Log(CurrentHealth);
+
+        if (CurrentHealth <= 0)
             Die();
     }
+
+    
+    private void Update()
+    {
+        //if (CurrentHealth <= 0)
+            //GO();
+    }
+    
 
     public void Heal(int amount)
     {
@@ -45,9 +56,15 @@ public class PlayerHealth : MonoBehaviour
         HealthChanged?.Invoke(CurrentHealth, maxHealth);
     }
 
+    private void GO()
+    {
+        //SceneManager.LoadScene("deadScene");
+    }
+
     private void Die()
     {
         Debug.Log("Player died.", this);
+        //SceneManager.LoadScene("deadScene");
         Died?.Invoke();
     }
 }

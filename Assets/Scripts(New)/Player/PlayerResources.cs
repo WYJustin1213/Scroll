@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [DisallowMultipleComponent]
 public class PlayerResources : MonoBehaviour
@@ -19,6 +20,12 @@ public class PlayerResources : MonoBehaviour
             return;
 
         health = value;
+
+        if(health <= 0)
+        {
+            Go();
+        }
+
         Changed?.Invoke();
     }
 
@@ -30,6 +37,11 @@ public class PlayerResources : MonoBehaviour
 
         mana = value;
         Changed?.Invoke();
+    }
+
+    private void Go()
+    {
+        SceneManager.LoadScene("deadScene");
     }
 
     private void OnValidate()
