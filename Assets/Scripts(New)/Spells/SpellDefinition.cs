@@ -46,6 +46,10 @@ public class SpellDefinition : ScriptableObject
     [Header("Beam")]
     [SerializeField] private LaneSpoutBeam SpoutBeamPrefab;
     [SerializeField] private LaneShockBeam ShockBeamPrefab;
+    [SerializeField, Tooltip("World-space offset applied to each shock trail sprite.")]
+    private Vector3 shockTrailPositionOffset;
+    [SerializeField, Tooltip("World-space Euler rotation applied to each shock trail sprite.")]
+    private Vector3 shockTrailRotation;
 
     public SpellFunction Function => function;
     public bool Directional => directional;
@@ -53,6 +57,8 @@ public class SpellDefinition : ScriptableObject
     public LaneSleetProjectile sleetProjectilePrefab => SleetProjectilePrefab;
     public LaneSpoutBeam spoutBeamPrefab => SpoutBeamPrefab;
     public LaneShockBeam shockBeamPrefab => ShockBeamPrefab;
+    public Vector3 ShockTrailPositionOffset => shockTrailPositionOffset;
+    public Vector3 ShockTrailRotation => shockTrailRotation;
     public GameObject TargetPrefab => sapTargetPrefab;
     public int ManaCost => Mathf.Max(0, manaCost);
 
