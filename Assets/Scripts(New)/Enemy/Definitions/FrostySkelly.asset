@@ -22,5 +22,5 @@ MonoBehaviour:
   ability: 1
   spawnTier: 1
   enemyElement: 3
-  immunities: 8
+  immunities: 12
   weaknesses: 1
