@@ -19,7 +19,7 @@ MonoBehaviour:
   aliases: []
   function: 2
   spellElement: 2
-  manaCost: 1
+  manaCost: 3
   directional: 1
   SparkProjectilePrefab: {fileID: 0}
   SleetProjectilePrefab: {fileID: 0}
