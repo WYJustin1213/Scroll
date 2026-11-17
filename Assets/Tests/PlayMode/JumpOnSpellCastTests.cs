@@ -12,7 +12,7 @@ public class JumpOnSpellCastTests
 {
     private const BindingFlags PrivateInstance = BindingFlags.Instance | BindingFlags.NonPublic;
     private readonly List<Object> objects = new List<Object>();
-    private readonly Component[] lanes = new Component[3];
+    private readonly Component[] lanes = new Component[4];
     private Component enemy;
     private Component controller;
     private Component point;
@@ -77,15 +77,15 @@ public class JumpOnSpellCastTests
     }
 
     [Test]
-    public void CastUsesAvailableOtherLaneOnSameRow()
+    public void CastUsesOnlyAdjacentLaneWhenAtWall()
     {
         CreateEnemy(1, 1);
         Assert.That(Cast(), Is.True);
-        AssertDestination(2, 1);
+        AssertDestination(1, 2);
     }
 
     [Test]
-    public void OpenLanesAreRandomlySelected()
+    public void AdjacentOpenLanesAreRandomlySelected()
     {
         Set(spell, "manaCost", 0);
         UnityEngine.Random.State previousState = UnityEngine.Random.state;
@@ -95,11 +95,11 @@ public class JumpOnSpellCastTests
             var destinations = new HashSet<object>();
             for (int i = 0; i < 30; i++)
             {
-                Assert.That(Call(enemy, "InitializeAtTile", lanes[0], Call(lanes[0], "GetTile", 1)), Is.True);
+                Assert.That(Call(enemy, "InitializeAtTile", lanes[1], Call(lanes[1], "GetTile", 1)), Is.True);
                 Assert.That(Cast(), Is.True);
                 destinations.Add(enemy.GetType().GetProperty("Lane").GetValue(enemy));
             }
-            Assert.That(destinations, Is.EquivalentTo(new object[] { lanes[1], lanes[2] }));
+            Assert.That(destinations, Is.EquivalentTo(new object[] { lanes[0], lanes[2] }));
         }
         finally
         {
@@ -108,25 +108,26 @@ public class JumpOnSpellCastTests
     }
 
     [Test]
-    public void FullRowUsesNearestAvailableFartherRow()
+    public void FullRowsUseNearestAvailableCloserRow()
     {
         CreateEnemy(1, 1);
         CreateEnemy(2, 1);
         CreateEnemy(1, 2);
         Assert.That(Cast(), Is.True);
-        AssertDestination(2, 2);
+        AssertDestination(1, 0);
     }
 
     [Test]
-    public void FullFartherRowsUseNearestAvailableCloserRow()
+    public void FullAdjacentLaneDoesNotJumpAcrossIt()
     {
-        CreateEnemy(1, 1);
-        CreateEnemy(2, 1);
-        CreateEnemy(1, 2);
-        CreateEnemy(2, 2);
-        CreateEnemy(1, 0);
+        for (int index = 0; index < 3; index++)
+        {
+            CreateEnemy(0, index);
+            CreateEnemy(2, index);
+        }
+        Assert.That(Call(enemy, "InitializeAtTile", lanes[1], Call(lanes[1], "GetTile", 1)), Is.True);
         Assert.That(Cast(), Is.True);
-        AssertDestination(2, 0);
+        AssertDestination(1, 1);
     }
 
     [Test]
@@ -138,7 +139,7 @@ public class JumpOnSpellCastTests
         Set(player, "tileIndex", 1);
         CreateEnemy(1, 2);
         Assert.That(Cast(), Is.True);
-        AssertDestination(2, 2);
+        AssertDestination(1, 0);
     }
 
     [Test]
@@ -175,7 +176,7 @@ public class JumpOnSpellCastTests
         Set(spell, "sapTargetPrefab", target);
         CreateEnemy(1, 1);
         Assert.That(Cast(), Is.True);
-        AssertDestination(2, 1);
+        AssertDestination(1, 2);
     }
 
     [Test]
@@ -248,7 +249,8 @@ public class JumpOnSpellCastTests
         CreateEnemy(1, 1);
         Vector3 start = enemy.transform.position;
         Assert.That(Cast(), Is.True);
-        AssertDestination(2, 1);
+        Assert.That(enemy.GetType().GetProperty("Lane").GetValue(enemy), Is.EqualTo(lanes[1]));
+        AssertDestination(1, 2);
         Assert.That(enemy.transform.position, Is.EqualTo(start));
         yield return new WaitForSeconds(0.1f);
         Vector3 inFlight = enemy.transform.position;
@@ -256,13 +258,77 @@ public class JumpOnSpellCastTests
         Assert.That(inFlight.x, Is.GreaterThan(start.x));
 
         Assert.That(Cast(), Is.True);
-        AssertDestination(0, 1);
+        Assert.That(enemy.GetType().GetProperty("Lane").GetValue(enemy),
+            Is.EqualTo(lanes[0]).Or.EqualTo(lanes[2]));
         Assert.That(enemy.transform.position, Is.EqualTo(inFlight));
         yield return new WaitForSeconds(0.45f);
-        Vector3 destination = ((Component)Call(lanes[0], "GetTile", 1)).transform.position;
+        Vector3 destination = ((Component)enemy.GetType().GetProperty("CurrentTile").GetValue(enemy)).transform.position;
         Assert.That(enemy.transform.position.x, Is.EqualTo(destination.x).Within(0.01f));
         Assert.That(enemy.transform.position.y, Is.EqualTo(start.y).Within(0.01f));
     }
+
+    [UnityTest]
+    public IEnumerator PopupSlowsExistingAndNewEnemiesWalkingAndJumpingUntilDisabled()
+    {
+        GameObject popupRoot = NewObject("Sentence Popup");
+        popupRoot.SetActive(false);
+        Component popup = popupRoot.AddComponent(TypeOf("SentencePopup"));
+        GameObject textObject = new GameObject("Sentence Text", typeof(RectTransform));
+        objects.Add(textObject);
+        textObject.transform.SetParent(popupRoot.transform);
+        Component text = textObject.AddComponent(Type.GetType("TMPro.TextMeshProUGUI, Unity.TextMeshPro", true));
+        GameObject inputObject = new GameObject("Input", typeof(RectTransform));
+        objects.Add(inputObject);
+        Component input = inputObject.AddComponent(Type.GetType("TMPro.TMP_InputField, Unity.TextMeshPro", true));
+        Component spellInput = Add("LaneSpellInput", "Spell Input");
+        Component uiManager = Add("Manager", "UI Manager");
+        GameObject commandsObject = NewObject("Commands");
+        Set(uiManager, "UICanvasGroup", commandsObject.AddComponent<CanvasGroup>());
+        Set(spellInput, "inputField", input);
+        Set(popup, "sentenceText", text);
+        Set(popup, "inputField", input);
+        Set(popup, "playerResources", resources);
+        Set(popup, "spellInput", spellInput);
+        Set(popup, "spellController", controller);
+        Set(popup, "uiManager", uiManager);
+        Set(popup, "popupObjects", new List<GameObject> { textObject });
+        Set(popup, "sentences", new List<string> { "Test sentence." });
+        Set(popup, "enemyMovementMultiplier", 0.25f);
+        popupRoot.SetActive(true);
+        Set(popup, "nextPopupTime", Time.time);
+        InvokeUpdate(popup);
+
+        Component newEnemy = CreateEnemy(1, 1);
+        yield return null;
+        Assert.That(Time.deltaTime, Is.GreaterThan(0f));
+        foreach (Component movingEnemy in new[] { enemy, newEnemy })
+        {
+            Set(movingEnemy, "moveTimer", 0f);
+            InvokeUpdate(movingEnemy);
+            Assert.That(GetFloat(movingEnemy, "moveTimer"), Is.EqualTo(Time.deltaTime * 0.25f).Within(0.00001f));
+        }
+
+        Call(enemy, "JumpToTile", Call(lanes[2], "GetTile", 1), 100f, 1f);
+        Set(popup, "enemyMovementMultiplier", 0f);
+        InvokeUpdate(enemy);
+        Assert.That(GetFloat(enemy, "jumpElapsed"), Is.Zero);
+        Set(popup, "enemyMovementMultiplier", 0.25f);
+        InvokeUpdate(enemy);
+        Assert.That(GetFloat(enemy, "jumpElapsed"), Is.EqualTo(Time.deltaTime * 0.25f).Within(0.00001f));
+
+        popupRoot.SetActive(false);
+        Set(newEnemy, "moveTimer", 0f);
+        InvokeUpdate(newEnemy);
+        Assert.That(GetFloat(newEnemy, "moveTimer"), Is.EqualTo(Time.deltaTime).Within(0.00001f));
+        float jumpElapsed = GetFloat(enemy, "jumpElapsed");
+        InvokeUpdate(enemy);
+        Assert.That(GetFloat(enemy, "jumpElapsed"), Is.EqualTo(jumpElapsed + Time.deltaTime).Within(0.00001f));
+    }
+
+    private static void InvokeUpdate(Component instance) =>
+        instance.GetType().GetMethod("Update", PrivateInstance).Invoke(instance, null);
+    private static float GetFloat(Object instance, string name) =>
+        (float)instance.GetType().GetField(name, PrivateInstance).GetValue(instance);
 
     private Component CreateEnemy(int lane, int index)
     {

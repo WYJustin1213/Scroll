@@ -51,18 +51,28 @@ public class JumpOnSpellCast : EnemyAbility
         LaneManager[] sceneLanes = FindObjectsByType<LaneManager>(FindObjectsSortMode.None);
         LaneTestEnemy[] enemies = FindObjectsByType<LaneTestEnemy>(FindObjectsSortMode.None);
         LanePlayerMarker[] players = FindObjectsByType<LanePlayerMarker>(FindObjectsSortMode.None);
-        var lanes = new List<LaneManager>();
+        var siblingLanes = new List<LaneManager>();
         int maxTileCount = 0;
 
         foreach (LaneManager lane in sceneLanes)
         {
-            if (lane != currentLane && lane.gameObject.scene == currentLane.gameObject.scene &&
+            if (lane.gameObject.scene == currentLane.gameObject.scene &&
                 lane.transform.parent == currentLane.transform.parent)
             {
-                lanes.Add(lane);
-                maxTileCount = Mathf.Max(maxTileCount, lane.TileCount);
+                siblingLanes.Add(lane);
             }
         }
+
+        siblingLanes.Sort((a, b) => a.transform.GetSiblingIndex().CompareTo(b.transform.GetSiblingIndex()));
+        int currentLaneIndex = siblingLanes.IndexOf(currentLane);
+        var lanes = new List<LaneManager>(2);
+        if (currentLaneIndex > 0)
+            lanes.Add(siblingLanes[currentLaneIndex - 1]);
+        if (currentLaneIndex >= 0 && currentLaneIndex < siblingLanes.Count - 1)
+            lanes.Add(siblingLanes[currentLaneIndex + 1]);
+
+        foreach (LaneManager lane in lanes)
+            maxTileCount = Mathf.Max(maxTileCount, lane.TileCount);
 
         for (int index = currentIndex; index < maxTileCount; index++)
         {

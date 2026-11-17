@@ -25,6 +25,8 @@ public class LaneSpellController : MonoBehaviour
 
     private float nextCastTime;
 
+    public SentencePopup SentencePopup { get; set; }
+
     private void Awake()
     {
         if (player == null)
@@ -126,6 +128,9 @@ public class LaneSpellController : MonoBehaviour
         int firstTileIndex,
         Vector3 spawnPosition)
     {
+        if (SentencePopup != null && SentencePopup.IsVisible)
+            return false;
+
         if (spell == null)
         {
             Debug.LogError("LaneSpellController needs a SpellDefinition.", this);

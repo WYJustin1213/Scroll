@@ -165,9 +165,10 @@ public class LaneTestEnemy : MonoBehaviour
         if (!Application.isPlaying || lane == null || currentTile == null)
             return;
 
+        float movementDeltaTime = Time.deltaTime * SentencePopup.EnemyMovementMultiplier;
         if (jumping)
         {
-            jumpElapsed = Mathf.Min(jumpElapsed + Time.deltaTime, jumpDuration);
+            jumpElapsed = Mathf.Min(jumpElapsed + movementDeltaTime, jumpDuration);
             float progress = jumpElapsed / jumpDuration;
             transform.position = Vector3.Lerp(jumpStart, currentTile.StandPosition, progress)
                 + Vector3.up * (4f * jumpHeight * progress * (1f - progress));
@@ -180,7 +181,7 @@ public class LaneTestEnemy : MonoBehaviour
             return;
 
         float moveInterval = definition.MoveInterval;
-        moveTimer += Time.deltaTime;
+        moveTimer += movementDeltaTime;
         while (moveTimer >= moveInterval)
         {
             LaneTile next = lane.GetNextTile(currentTile);

@@ -19,6 +19,9 @@ public class LaneSpellInput : MonoBehaviour
     [SerializeField] private bool castOnSubmit = true;
     [SerializeField] private bool clearAfterCast = true;
 
+    public TMP_InputField InputField => inputField != null ? inputField : GetComponent<TMP_InputField>();
+    public SentencePopup SentencePopup { get; set; }
+
     private void Awake()
     {
         if (inputField == null)
@@ -71,12 +74,18 @@ public class LaneSpellInput : MonoBehaviour
 
     private void HandleValueChanged(string text)
     {
-        if (castWhenTyped)
+        if (castWhenTyped && (SentencePopup == null || !SentencePopup.IsVisible))
             TryCast(text, out _);
     }
 
     private void HandleSubmit(string text)
     {
+        if (SentencePopup != null && SentencePopup.IsVisible)
+        {
+            SentencePopup.Submit(text);
+            return;
+        }
+
         if (castOnSubmit && !TryCast(text, out bool matched) && !matched && !string.IsNullOrWhiteSpace(text))
             Debug.LogWarning("No spell matches \"" + text + "\".", this);
     }

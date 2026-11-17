@@ -6,6 +6,8 @@ public class Manager : MonoBehaviour
     public bool commands = false;
     [SerializeField] GameObject CommandsUI;
     [SerializeField] CanvasGroup UICanvasGroup;
+
+    public SentencePopup SentencePopup { get; set; }
     
     private void Start()
     {
@@ -29,6 +31,9 @@ public class Manager : MonoBehaviour
         }
         else
         {
+            if (SentencePopup != null && SentencePopup.IsVisible)
+                return;
+
             commands = true;
             UICanvasGroup.alpha = 1f;
             UICanvasGroup.interactable = true;

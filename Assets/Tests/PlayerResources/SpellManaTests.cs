@@ -145,6 +145,92 @@ public class SpellManaTests
         Assert.That(ProjectileCount(), Is.Zero);
     }
 
+    [Test]
+    public void SentencePopupWaitsForExactSubmissionBlocksSpellsAndRestartsTimer()
+    {
+        GameObject popupRoot = new GameObject("Sentence");
+        objects.Add(popupRoot);
+        popupRoot.SetActive(false);
+        Component popup = popupRoot.AddComponent(RuntimeType("SentencePopup"));
+        GameObject textObject = new GameObject("Sentence Text", typeof(RectTransform));
+        textObject.transform.SetParent(popupRoot.transform);
+        Component text = textObject.AddComponent(Type.GetType("TMPro.TextMeshProUGUI, Unity.TextMeshPro", true));
+        GameObject inputObject = new GameObject("Input", typeof(RectTransform));
+        objects.Add(inputObject);
+        Component input = inputObject.AddComponent(Type.GetType("TMPro.TMP_InputField, Unity.TextMeshPro", true));
+        Component spellInput = CreateComponent("LaneSpellInput", "Spell Input");
+        Component uiManager = CreateComponent("Manager", "UI Manager");
+        GameObject commandsObject = new GameObject("Commands");
+        objects.Add(commandsObject);
+        CanvasGroup commandsGroup = commandsObject.AddComponent<CanvasGroup>();
+        SetField(uiManager, "UICanvasGroup", commandsGroup);
+        Call(uiManager, "UIVisible");
+        SetField(spellInput, "inputField", input);
+        SetField(popup, "sentenceText", text);
+        SetField(popup, "inputField", input);
+        SetField(popup, "playerResources", resources);
+        SetField(popup, "spellInput", spellInput);
+        SetField(popup, "spellController", controller);
+        SetField(popup, "uiManager", uiManager);
+        SetField(popup, "popupObjects", new List<GameObject> { textObject });
+        SetField(popup, "sentences", new List<string> { "Exact sentence." });
+        SetField(popup, "interval", 30f);
+        SetField(popup, "manaReward", 5);
+        SetField(popup, "enemyMovementMultiplier", 0.25f);
+        popupRoot.SetActive(true);
+
+        PropertyInfo movementMultiplier = popup.GetType().GetProperty("EnemyMovementMultiplier");
+        Assert.That(movementMultiplier.GetValue(null), Is.EqualTo(1f));
+        Assert.That(textObject.activeSelf, Is.False);
+        InvokePrivate(popup, "Update");
+        Assert.That(textObject.activeSelf, Is.False);
+        SetField(popup, "nextPopupTime", Time.time);
+        InvokePrivate(popup, "Update");
+        Assert.That(textObject.activeSelf, Is.True);
+        Assert.That((bool)uiManager.GetType().GetField("commands").GetValue(uiManager), Is.False);
+        Assert.That(commandsGroup.alpha, Is.Zero);
+        Assert.That(commandsGroup.interactable, Is.False);
+        Call(uiManager, "UIVisible");
+        Assert.That((bool)uiManager.GetType().GetField("commands").GetValue(uiManager), Is.False);
+        Assert.That(commandsGroup.alpha, Is.Zero);
+        Assert.That(commandsGroup.interactable, Is.False);
+        Assert.That(movementMultiplier.GetValue(null), Is.EqualTo(0.25f));
+        Assert.That(text.GetType().GetProperty("text").GetValue(text), Is.EqualTo("Exact sentence."));
+        Assert.That(Cast(), Is.False);
+        Assert.That(Mana, Is.EqualTo(5));
+
+        InvokePrivate(spellInput, "HandleSubmit", "exact sentence.");
+        Assert.That(textObject.activeSelf, Is.True);
+        Assert.That(movementMultiplier.GetValue(null), Is.EqualTo(0.25f));
+        Assert.That(Mana, Is.EqualTo(5));
+        InvokePrivate(spellInput, "HandleSubmit", "Exact sentence.");
+        Assert.That(textObject.activeSelf, Is.False);
+        Assert.That(movementMultiplier.GetValue(null), Is.EqualTo(1f));
+        Assert.That(Mana, Is.EqualTo(10));
+        Call(uiManager, "UIVisible");
+        Assert.That((bool)uiManager.GetType().GetField("commands").GetValue(uiManager), Is.True);
+        Assert.That(commandsGroup.alpha, Is.EqualTo(1f));
+        Call(popup, "Submit", "Exact sentence.");
+        Assert.That(Mana, Is.EqualTo(10));
+        InvokePrivate(popup, "Update");
+        Assert.That(textObject.activeSelf, Is.False);
+        Assert.That(Cast(), Is.True);
+        uiManager.GetType().GetField("commands").SetValue(uiManager, false);
+        SetField(popup, "nextPopupTime", Time.time);
+        InvokePrivate(popup, "Update");
+        Assert.That(textObject.activeSelf, Is.True);
+        Assert.That(commandsGroup.alpha, Is.Zero);
+        Assert.That((bool)uiManager.GetType().GetField("commands").GetValue(uiManager), Is.False);
+        popupRoot.SetActive(false);
+        Call(uiManager, "UIVisible");
+        Assert.That(commandsGroup.alpha, Is.EqualTo(1f));
+    }
+
+    private static void InvokePrivate(Component component, string method, params object[] arguments)
+    {
+        component.GetType().GetMethod(method, PrivateInstance).Invoke(component, arguments);
+    }
+
     private int Mana => (int)resources.GetType().GetProperty("Mana").GetValue(resources);
 
     private void SetMana(int value)
