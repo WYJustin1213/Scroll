@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Skelly
   m_EditorClassIdentifier: 
   sprite: {fileID: -1416107998, guid: fe210c9c604974b75b195bc17bbee4e4, type: 3}
-  moveInterval: 4
+  moveInterval: 6
   health: 2
   attack: 1
   drop: 2

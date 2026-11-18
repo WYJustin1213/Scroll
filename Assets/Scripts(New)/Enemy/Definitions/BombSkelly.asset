@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BombSkelly
   m_EditorClassIdentifier: 
   sprite: {fileID: 780928295, guid: f64bad00a21d14719a20eca5acc287fa, type: 3}
-  moveInterval: 1
+  moveInterval: 2
   health: 1
   attack: 3
   drop: 0

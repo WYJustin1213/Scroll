@@ -7483,7 +7483,7 @@ MonoBehaviour:
   - {fileID: 1258088813}
   interval: 30
   manaReward: 5
-  enemyMovementMultiplier: 0.1
+  enemyMovementMultiplier: 0.3
   sentences:
   - The quick brown fox jumps over the lazy dog.
   - How vexingly quick daft zebras jump.
@@ -7492,6 +7492,18 @@ MonoBehaviour:
   - Two driven jocks help fax my big quiz.
   - The navy blue shirt had a small tear at the hem.
   - The cat is chasing after the rat.
+  - The red fox hops over six small logs near the pond.
+  - Stay calm, read ahead, and type smoothly.
+  - Stay calm, read ahead, and type smoothly.
+  - Pack my box with five dozen liquor jugs.
+  - The last time I met an otter was at the 2006 Olympics.
+  - Quoth the raven, "Nevermore!"
+  - Skelly Skroll's my name and typing is my game.
+  - Skelly Skroll's my name and typing is my game.
+  - Dallas flags a glass flask as a half-full hall.
+  - We require quiet poetry to write true stories.
+  - Accurate typing is not simply about speed.
+  - They have been there before and will be there again.
 --- !u!1001 &866122668
 PrefabInstance:
   m_ObjectHideFlags: 0
