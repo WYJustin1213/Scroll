@@ -88,9 +88,10 @@ public class LaneSpellInput : MonoBehaviour
             return;
         }
 
-        if (castOnSubmit && !TryCast(text, out bool matched) && !matched && !string.IsNullOrWhiteSpace(text))
+        if (castOnSubmit && !TryCast(text, out bool matched) && !matched && !string.IsNullOrWhiteSpace(text)){
             Debug.LogWarning("No spell matches \"" + text + "\".", this);
             audio.Play();
+        }   
     }
 
     private bool TryCast(string text, out bool matched)
