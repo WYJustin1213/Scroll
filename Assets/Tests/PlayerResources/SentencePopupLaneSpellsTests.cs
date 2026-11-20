@@ -13,8 +13,11 @@ public class SentencePopupLaneSpellsTests
     private readonly List<Object> objects = new List<Object>();
     private Component popup;
     private Component automatic;
+    private Component spellInput;
     private Component controller;
     private Component resources;
+    private Component uiManager;
+    private CanvasGroup commandsGroup;
     private Component firstPoint;
     private Component secondPoint;
     private Object spell;
@@ -45,9 +48,11 @@ public class SentencePopupLaneSpellsTests
         Component text = textObject.AddComponent(Type.GetType("TMPro.TextMeshProUGUI, Unity.TextMeshPro", true));
         Component input = NewObject("Input", typeof(RectTransform))
             .AddComponent(Type.GetType("TMPro.TMP_InputField, Unity.TextMeshPro", true));
-        Component spellInput = Add("LaneSpellInput", "Spell input");
-        Component uiManager = Add("Manager", "UI manager");
-        Set(uiManager, "UICanvasGroup", NewObject("Commands").AddComponent<CanvasGroup>());
+        spellInput = Add("LaneSpellInput", "Spell input");
+        uiManager = Add("Manager", "UI manager");
+        commandsGroup = NewObject("Commands").AddComponent<CanvasGroup>();
+        Set(uiManager, "UICanvasGroup", commandsGroup);
+        Set(controller, "uiManager", uiManager);
         Set(spellInput, "inputField", input);
         Set(popup, "sentenceText", text);
         Set(popup, "inputField", input);
@@ -84,6 +89,26 @@ public class SentencePopupLaneSpellsTests
     }
 
     [Test]
+    public void PopupBlocksCommandsUntilExactSubmission()
+    {
+        Call(resources, "SetMana", 10);
+        Call(uiManager, "UIVisible");
+        Assert.That((bool)uiManager.GetType().GetField("commands").GetValue(uiManager), Is.False);
+        Assert.That(commandsGroup.interactable, Is.False);
+        Assert.That((bool)Call(controller, "CastSpell", spell, firstPoint), Is.False);
+
+        InvokePrivate(spellInput, "HandleSubmit", "wrong");
+        Assert.That(commandsGroup.interactable, Is.False);
+        Assert.That((bool)Call(controller, "CastSpell", spell, firstPoint), Is.False);
+
+        InvokePrivate(spellInput, "HandleSubmit", "Exact sentence.");
+        Assert.That((bool)uiManager.GetType().GetField("commands").GetValue(uiManager), Is.True);
+        Assert.That(commandsGroup.alpha, Is.EqualTo(1f));
+        Assert.That(commandsGroup.interactable, Is.True);
+        Assert.That((bool)Call(controller, "CastSpell", spell, firstPoint), Is.True);
+    }
+
+    [Test]
     public void ExactCompletionCastsEachLaneWithoutSpendingReward()
     {
         Call(popup, "Submit", "wrong");
@@ -93,6 +118,8 @@ public class SentencePopupLaneSpellsTests
         Call(popup, "Submit", "Exact sentence.");
         Assert.That(ProjectileCount(), Is.EqualTo(2));
         Assert.That(Mana, Is.EqualTo(2));
+        Assert.That((bool)uiManager.GetType().GetField("commands").GetValue(uiManager), Is.True);
+        Assert.That(commandsGroup.interactable, Is.True);
         Call(popup, "Submit", "Exact sentence.");
         Assert.That(ProjectileCount(), Is.EqualTo(2));
     }
@@ -210,8 +237,8 @@ public class SentencePopupLaneSpellsTests
     private static Type TypeOf(string name) => Type.GetType(name + ", Assembly-CSharp", true);
     private static object Call(Component instance, string method, params object[] args) =>
         instance.GetType().GetMethod(method).Invoke(instance, args);
-    private static void InvokePrivate(Component instance, string method) =>
-        instance.GetType().GetMethod(method, PrivateInstance).Invoke(instance, null);
+    private static void InvokePrivate(Component instance, string method, params object[] args) =>
+        instance.GetType().GetMethod(method, PrivateInstance).Invoke(instance, args);
     private static void Set(Object instance, string name, object value) =>
         instance.GetType().GetField(name, PrivateInstance).SetValue(instance, value);
 }
