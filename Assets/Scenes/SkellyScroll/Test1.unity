@@ -3245,7 +3245,7 @@ Transform:
   m_GameObject: {fileID: 371574341}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 490.04764, y: 1415.8237, z: 1937.6251}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -13566,7 +13566,7 @@ Transform:
   m_GameObject: {fileID: 1646611127}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.7414436, y: -15.62129, z: 5.6150193}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -14885,7 +14885,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d5387c97c7b4d18a1c9da61de2a1973, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  castKey: 20
+  castKey: 0
   player: {fileID: 116786463}
   playerResources: {fileID: 1900001000}
   spellOrigin: {fileID: 116786462}
