@@ -30,6 +30,8 @@ public class LaneSpellController : MonoBehaviour
     public SentencePopup SentencePopup { get; set; }
     public PlayerResources Resources => playerResources;
 
+    private AudioSource audio;
+
     private void Awake()
     {
         if (player == null)
@@ -40,6 +42,9 @@ public class LaneSpellController : MonoBehaviour
 
         if (spellOrigin == null)
             spellOrigin = player != null ? player.transform : transform;
+
+        audio = GetComponent<AudioSource>();
+
     }
 
     private void Update()
@@ -158,25 +163,29 @@ public class LaneSpellController : MonoBehaviour
         if ((spell.Directional || spell.Function == SpellFunction.Effect) && lane == null)
         {
             Debug.LogError("Spell target lane is not available.", this);
+            audio.Play();
             return false;
         }
 
         if (spell.Directional && lane.GetTile(firstTileIndex) == null)
         {
             Debug.LogError("Spell target lane does not have a valid starting tile.", this);
+            audio.Play();
             return false;
         }
 
         if (playerResources == null)
         {
             Debug.LogError("LaneSpellController needs the player's PlayerResources component.", this);
+            audio.Play();
             return false;
         }
 
         if (playerResources.Mana < spell.ManaCost)
         {
             Debug.LogWarning("Not enough mana to cast \"" + spell.name + "\".", this);
-            return false;
+            audio.Play();
+            return false;          
         }
 
         if (spell.Function == SpellFunction.Effect)
