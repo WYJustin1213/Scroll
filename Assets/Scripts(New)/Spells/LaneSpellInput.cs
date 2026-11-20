@@ -34,7 +34,17 @@ public class LaneSpellInput : MonoBehaviour
         }
         audio = GetComponent<AudioSource>();
     }
-
+    
+    private void LateUpdate()
+    {
+        if (inputField != null && inputField.isActiveAndEnabled && inputField.IsInteractable()
+            && EventSystem.current != null
+            && EventSystem.current.currentSelectedGameObject != inputField.gameObject)
+        {
+            FocusInput();
+        }
+    }
+    
     private void OnEnable()
     {
         if (inputField == null)

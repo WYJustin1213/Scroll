@@ -13,7 +13,7 @@ public class Manager : MonoBehaviour
     {
         UIVisible();
     }
-
+    
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Tab))

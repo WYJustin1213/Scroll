@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using TMPro;
+using UnityEngine.EventSystems;
 using UnityEngine;
 
 [DisallowMultipleComponent]
@@ -40,6 +41,27 @@ public class SentencePopup : MonoBehaviour
                 multiplier = Mathf.Min(multiplier, Mathf.Clamp01(popup.enemyMovementMultiplier));
             return multiplier;
         }
+    }
+
+    private void LateUpdate()
+    {
+        if (IsVisible || inputField == null || !inputField.isActiveAndEnabled || !inputField.IsInteractable()
+            || EventSystem.current == null
+            || EventSystem.current.currentSelectedGameObject == inputField.gameObject)
+            return;
+
+        EventSystem.current.SetSelectedGameObject(inputField.gameObject);
+        inputField.ActivateInputField();
+    }
+
+    private void FocusInput()
+    {
+        if (inputField == null || !inputField.isActiveAndEnabled || !inputField.IsInteractable()
+            || EventSystem.current == null)
+            return;
+
+        EventSystem.current.SetSelectedGameObject(inputField.gameObject);
+        inputField.ActivateInputField();
     }
 
     private void OnEnable()
@@ -103,6 +125,7 @@ public class SentencePopup : MonoBehaviour
         int reward = Mathf.Max(0, manaReward);
         playerResources.SetMana((int)Math.Min(int.MaxValue, (long)playerResources.Mana + reward));
         inputField.SetTextWithoutNotify(string.Empty);
+        FocusInput();
         SetPopupVisible(false);
         nextPopupTime = Time.time + Mathf.Max(0f, interval);
         Completed?.Invoke();
