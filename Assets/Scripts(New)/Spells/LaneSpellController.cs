@@ -253,8 +253,10 @@ public class LaneSpellController : MonoBehaviour
 
         playerResources.SetMana(playerResources.Mana - spell.ManaCost);
         nextCastTime = Time.time;
+        /*
         if (uiManager != null)
             uiManager.HideUI();
+        */
 
         NotifySpellCast(spell);
         return true;
@@ -303,8 +305,10 @@ public class LaneSpellController : MonoBehaviour
 
         playerResources.SetMana((int)Math.Min(int.MaxValue, (long)playerResources.Mana + 1 + targetsToDestroy.Count));
         nextCastTime = Time.time;
+        /*
         if (uiManager != null)
             uiManager.HideUI();
+        */
 
         return true;
     }
