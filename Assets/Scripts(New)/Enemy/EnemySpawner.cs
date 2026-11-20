@@ -10,7 +10,17 @@ public class EnemySpawner : MonoBehaviour
         Tiered
     }
 
+    private enum SpawnResult
+    {
+        Spawned,
+        Occupied,
+        NoEligiblePrefab,
+        Invalid
+    }
+
     [SerializeField] private LaneTile spawnTile;
+    [Tooltip("Player mana source. If unassigned, the spawner finds a PlayerResources in the scene.")]
+    [SerializeField] private PlayerResources playerResources;
     [SerializeField, Min(0.01f)] private float spawnInterval = 5f;
     [SerializeField] private SelectionMode selectionMode;
     [Tooltip("Assign each enemy prefab only once. Its definition determines its tier.")]
@@ -21,10 +31,42 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField, Range(0, 100)] private int epicChance = 5;
 
     private float elapsed;
+    private int previousMana;
 
     private void OnEnable()
     {
         elapsed = 0f;
+        if (playerResources == null)
+            playerResources = FindFirstObjectByType<PlayerResources>();
+
+        if (playerResources == null)
+        {
+            Debug.LogError("EnemySpawner needs the player's PlayerResources to spawn mana waves.", this);
+            return;
+        }
+
+        previousMana = playerResources.Mana;
+        playerResources.Changed += OnResourcesChanged;
+    }
+
+    private void OnDisable()
+    {
+        if (playerResources != null)
+            playerResources.Changed -= OnResourcesChanged;
+    }
+
+    private void OnResourcesChanged()
+    {
+        int mana = playerResources.Mana;
+        int crossings = mana > previousMana ? mana / 15 - previousMana / 15 : 0;
+        previousMana = mana;
+
+        for (int i = 0; i < crossings; i++)
+        {
+            SpawnResult result = TrySpawn();
+            if (result != SpawnResult.NoEligiblePrefab || !HasSelectablePrefab())
+                break;
+        }
     }
 
     private void Update()
@@ -46,16 +88,21 @@ public class EnemySpawner : MonoBehaviour
 
     private void Spawn()
     {
+        TrySpawn();
+    }
+
+    private SpawnResult TrySpawn()
+    {
         if (spawnTile == null || spawnTile.Lane == null)
         {
             Debug.LogError("EnemySpawner needs a spawn tile assigned to a lane.", this);
-            return;
+            return SpawnResult.Invalid;
         }
 
         if (selectionMode != SelectionMode.Equal && selectionMode != SelectionMode.Tiered)
         {
             Debug.LogError("EnemySpawner has an invalid selection mode.", this);
-            return;
+            return SpawnResult.Invalid;
         }
 
         if (selectionMode == SelectionMode.Tiered &&
@@ -64,7 +111,7 @@ public class EnemySpawner : MonoBehaviour
              commonChance + rareChance + epicChance != 100))
         {
             Debug.LogError("EnemySpawner tier chances must each be between 0 and 100 and total 100%.", this);
-            return;
+            return SpawnResult.Invalid;
         }
 
         var seen = new HashSet<LaneTestEnemy>();
@@ -73,37 +120,56 @@ public class EnemySpawner : MonoBehaviour
             if (prefab == null || prefab.Definition == null || !prefab.gameObject.activeSelf || !seen.Add(prefab))
             {
                 Debug.LogError("EnemySpawner prefabs must be active, unique enemies with definitions.", this);
-                return;
+                return SpawnResult.Invalid;
             }
 
             EnemySpawnTier tier = prefab.Definition.SpawnTier;
             if (tier != EnemySpawnTier.Common && tier != EnemySpawnTier.Rare && tier != EnemySpawnTier.Epic)
             {
                 Debug.LogError("EnemySpawner found an enemy with an invalid spawn tier.", prefab);
-                return;
+                return SpawnResult.Invalid;
             }
         }
 
         foreach (LaneTestEnemy enemy in FindObjectsByType<LaneTestEnemy>(FindObjectsSortMode.None))
         {
             if (!enemy.IsDead && enemy.CurrentTile == spawnTile)
-                return;
+                return SpawnResult.Occupied;
         }
 
         foreach (LanePlayerMarker player in FindObjectsByType<LanePlayerMarker>(FindObjectsSortMode.None))
         {
             if (player.Lane == spawnTile.Lane && player.TileIndex == spawnTile.Index)
-                return;
+                return SpawnResult.Occupied;
         }
 
         LaneTestEnemy selectedPrefab = SelectPrefab();
         if (selectedPrefab == null)
-            return;
+            return SpawnResult.NoEligiblePrefab;
 
         LaneTestEnemy spawnedEnemy = Instantiate(
             selectedPrefab, spawnTile.StandPosition, selectedPrefab.transform.rotation, spawnTile.Lane.transform);
         if (!spawnedEnemy.InitializeAtTile(spawnTile.Lane, spawnTile))
+        {
             Destroy(spawnedEnemy.gameObject);
+            return SpawnResult.Invalid;
+        }
+
+        return SpawnResult.Spawned;
+    }
+
+    private bool HasSelectablePrefab()
+    {
+        foreach (LaneTestEnemy prefab in enemyPrefabs)
+        {
+            if (selectionMode == SelectionMode.Equal ||
+                (prefab.Definition.SpawnTier == EnemySpawnTier.Common && commonChance > 0) ||
+                (prefab.Definition.SpawnTier == EnemySpawnTier.Rare && rareChance > 0) ||
+                (prefab.Definition.SpawnTier == EnemySpawnTier.Epic && epicChance > 0))
+                return true;
+        }
+
+        return false;
     }
 
     private LaneTestEnemy SelectPrefab()
@@ -116,16 +182,21 @@ public class EnemySpawner : MonoBehaviour
                 : roll < commonChance + rareChance ? EnemySpawnTier.Rare : EnemySpawnTier.Epic;
         }
 
+        return SelectPrefabForTier(selectionMode == SelectionMode.Tiered ? selectedTier : (EnemySpawnTier?)null);
+    }
+
+    private LaneTestEnemy SelectPrefabForTier(EnemySpawnTier? selectedTier)
+    {
         int eligibleCount = 0;
         foreach (LaneTestEnemy prefab in enemyPrefabs)
         {
-            if (selectionMode == SelectionMode.Equal || prefab.Definition.SpawnTier == selectedTier)
+            if (!selectedTier.HasValue || prefab.Definition.SpawnTier == selectedTier.Value)
                 eligibleCount++;
         }
 
         if (eligibleCount == 0)
         {
-            string selection = selectionMode == SelectionMode.Tiered ? selectedTier.ToString() + " tier" : "prefab list";
+            string selection = selectedTier.HasValue ? selectedTier.Value.ToString() + " tier" : "prefab list";
             Debug.LogWarning("EnemySpawner skipped a spawn because its " + selection + " is empty.", this);
             return null;
         }
@@ -133,7 +204,7 @@ public class EnemySpawner : MonoBehaviour
         int selectedIndex = Random.Range(0, eligibleCount);
         foreach (LaneTestEnemy prefab in enemyPrefabs)
         {
-            if (selectionMode == SelectionMode.Tiered && prefab.Definition.SpawnTier != selectedTier)
+            if (selectedTier.HasValue && prefab.Definition.SpawnTier != selectedTier.Value)
                 continue;
 
             if (selectedIndex-- != 0)

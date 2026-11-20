@@ -13,11 +13,13 @@ public class Manager : MonoBehaviour
     {
         UIVisible();
     }
-
+    
     void Update()
     {
+        /*
         if (Input.GetKeyDown(KeyCode.Tab))
             UIVisible();
+        */
 
         if (Input.GetKeyUp(KeyCode.Escape))
             ExitApplication();
