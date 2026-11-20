@@ -95,6 +95,7 @@ public class LaneTestEnemy : MonoBehaviour
             }
             else
             {
+                pointTracker.instance.points += definition.score;
                 Destroy(gameObject);
             }
         }

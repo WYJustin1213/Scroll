@@ -14,6 +14,7 @@ public class goBacker : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Space))
         {
+            pointTracker.instance.Flush();
             SceneManager.LoadScene("Test1");
         }
     }

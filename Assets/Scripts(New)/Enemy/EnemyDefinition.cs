@@ -32,6 +32,7 @@ public class EnemyDefinition : ScriptableObject
     [SerializeField] private ElementImmunity immunities = ElementImmunity.None;
 
     [SerializeField] private ElementWeakness weaknesses = ElementWeakness.None;
+    [SerializeField] public int score;
 
     public ElementWeakness Weaknesses => weaknesses;
     public bool IsWeakTo(SpellElement element) => weaknesses.IsWeakTo(element);
