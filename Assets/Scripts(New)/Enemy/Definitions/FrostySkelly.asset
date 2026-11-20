@@ -24,3 +24,4 @@ MonoBehaviour:
   enemyElement: 3
   immunities: 12
   weaknesses: 1
+  score: 3
