@@ -26,6 +26,9 @@ public class SpellDefinition : ScriptableObject
     [TextArea(2, 4)]
     public string description;
 
+    [Tooltip("UI prefab with a root Animator playing a non-looping default state.")]
+    [SerializeField] private GameObject iconPrefab;
+
     [Header("Spell Text")]
     public string commandText;
     public List<string> aliases = new List<string>();
@@ -52,6 +55,7 @@ public class SpellDefinition : ScriptableObject
     private Vector3 shockTrailRotation;
 
     public SpellFunction Function => function;
+    public GameObject IconPrefab => iconPrefab;
     public bool Directional => directional;
     public LaneFireballProjectile sparkProjectilePrefab => SparkProjectilePrefab;
     public LaneSleetProjectile sleetProjectilePrefab => SleetProjectilePrefab;

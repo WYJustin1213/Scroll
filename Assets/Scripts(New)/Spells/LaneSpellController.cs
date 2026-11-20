@@ -19,6 +19,8 @@ public class LaneSpellController : MonoBehaviour
     [SerializeField] private Transform spellOrigin;
     [SerializeField] private SpellDefinition defaultSpell;
     [SerializeField] private Manager uiManager;
+    [SerializeField, Tooltip("Optional UI display for successfully cast spell icons.")]
+    private SpellIconDisplay iconDisplay;
 
     [Header("Casting")]
     [SerializeField] private Vector3 spawnOffset = new Vector3(0f, 0.65f, 0.55f);
@@ -26,6 +28,7 @@ public class LaneSpellController : MonoBehaviour
     private float nextCastTime;
 
     public SentencePopup SentencePopup { get; set; }
+    public PlayerResources Resources => playerResources;
 
     private void Awake()
     {
@@ -69,6 +72,16 @@ public class LaneSpellController : MonoBehaviour
 
     public bool CastSpell(SpellDefinition spell, LaneSpellPoint point)
     {
+        return CastSpellInternal(spell, point, 0);
+    }
+
+    internal bool CastSpellWithTemporaryMana(SpellDefinition spell, LaneSpellPoint point, int temporaryMana)
+    {
+        return CastSpellInternal(spell, point, temporaryMana);
+    }
+
+    private bool CastSpellInternal(SpellDefinition spell, LaneSpellPoint point, int temporaryMana)
+    {
         if (spell == null)
         {
             Debug.LogError("LaneSpellController needs a SpellDefinition.", this);
@@ -76,7 +89,7 @@ public class LaneSpellController : MonoBehaviour
         }
 
         if (!spell.Directional && spell.Function != SpellFunction.Effect)
-            return TryCast(spell, null, 0, Vector3.zero);
+            return TryCast(spell, null, 0, Vector3.zero, temporaryMana);
 
         if (point == null ||
             point.Lane == null ||
@@ -90,7 +103,8 @@ public class LaneSpellController : MonoBehaviour
             spell,
             point.Lane,
             0,
-            spell.Directional ? point.SpellOrigin.position : Vector3.zero
+            spell.Directional ? point.SpellOrigin.position : Vector3.zero,
+            temporaryMana
         );
     }
 
@@ -126,7 +140,8 @@ public class LaneSpellController : MonoBehaviour
         SpellDefinition spell,
         LaneManager lane,
         int firstTileIndex,
-        Vector3 spawnPosition)
+        Vector3 spawnPosition,
+        int temporaryMana = 0)
     {
         if (SentencePopup != null && SentencePopup.IsVisible)
             return false;
@@ -166,10 +181,21 @@ public class LaneSpellController : MonoBehaviour
 
         if (spell.Function == SpellFunction.Effect)
         {
-            if (!CastSap(spell, lane))
+            if (temporaryMana < 0 || temporaryMana > playerResources.Mana)
+            {
+                Debug.LogError("Temporary spell mana is invalid.", this);
                 return false;
+            }
 
-            SpellCast?.Invoke(this);
+            // Effect spells do not spend mana, so remove the credit before their mana gain.
+            playerResources.SetMana(playerResources.Mana - temporaryMana);
+            if (!CastSap(spell, lane))
+            {
+                playerResources.SetMana((int)Math.Min(int.MaxValue, (long)playerResources.Mana + temporaryMana));
+                return false;
+            }
+
+            NotifySpellCast(spell);
             return true;
         }
 
@@ -221,8 +247,16 @@ public class LaneSpellController : MonoBehaviour
         if (uiManager != null)
             uiManager.HideUI();
 
-        SpellCast?.Invoke(this);
+        NotifySpellCast(spell);
         return true;
+    }
+
+    private void NotifySpellCast(SpellDefinition spell)
+    {
+        if (iconDisplay != null)
+            iconDisplay.Show(spell);
+
+        SpellCast?.Invoke(this);
     }
 
     private bool CastSap(SpellDefinition spell, LaneManager lane)
@@ -258,7 +292,7 @@ public class LaneSpellController : MonoBehaviour
         foreach (GameObject target in targetsToDestroy)
             Destroy(target);
 
-        playerResources.SetMana(playerResources.Mana + 1 + targetsToDestroy.Count);
+        playerResources.SetMana((int)Math.Min(int.MaxValue, (long)playerResources.Mana + 1 + targetsToDestroy.Count));
         nextCastTime = Time.time;
         if (uiManager != null)
             uiManager.HideUI();

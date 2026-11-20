@@ -29,6 +29,7 @@ public class SentencePopup : MonoBehaviour
     private string currentSentence;
     private bool configured;
     public bool IsVisible { get; private set; }
+    public event Action Completed;
 
     public static float EnemyMovementMultiplier
     {
@@ -104,6 +105,7 @@ public class SentencePopup : MonoBehaviour
         inputField.SetTextWithoutNotify(string.Empty);
         SetPopupVisible(false);
         nextPopupTime = Time.time + Mathf.Max(0f, interval);
+        Completed?.Invoke();
     }
 
     private void SetPopupVisible(bool visible)

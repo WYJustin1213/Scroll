@@ -15,6 +15,7 @@ MonoBehaviour:
   displayName: Sap
   description: Removes every instance of the configured target prefab and restores
     1 mana for each one.
+  iconPrefab: {fileID: 1000001, guid: 46a708fe1ad0b2f4bb00760cd5c4b06d, type: 3}
   commandText: Sap
   aliases: []
   function: 1
@@ -26,3 +27,5 @@ MonoBehaviour:
   sapTargetPrefab: {fileID: 2886999126242463011, guid: 368b047b88e594b34a28f20da6f95b08, type: 3}
   SpoutBeamPrefab: {fileID: 0}
   ShockBeamPrefab: {fileID: 0}
+  shockTrailPositionOffset: {x: 0, y: 0, z: 0}
+  shockTrailRotation: {x: 0, y: 0, z: 0}

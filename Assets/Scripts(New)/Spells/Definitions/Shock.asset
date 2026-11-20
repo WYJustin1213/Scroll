@@ -15,6 +15,7 @@ MonoBehaviour:
   displayName: Shock
   description: Sends an electric beam down the selected lane and chains to nearby
     enemies.
+  iconPrefab: {fileID: 1000001, guid: 19d072e868d5d7a4db4dfb39a56a3f68, type: 3}
   commandText: Shock
   aliases: []
   function: 2

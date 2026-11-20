@@ -15,6 +15,7 @@ MonoBehaviour:
   displayName: Spark
   description: Launches a spark down the selected lane. Damages the first enemy it
     touches.
+  iconPrefab: {fileID: 1000001, guid: c1fe06334fb18ee4db7d46c51712a933, type: 3}
   commandText: Spark
   aliases: []
   function: 0
@@ -26,3 +27,5 @@ MonoBehaviour:
   sapTargetPrefab: {fileID: 0}
   SpoutBeamPrefab: {fileID: 0}
   ShockBeamPrefab: {fileID: 0}
+  shockTrailPositionOffset: {x: 0, y: 0, z: 0}
+  shockTrailRotation: {x: 0, y: 0, z: 0}

@@ -5233,6 +5233,55 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3071452784242513105, guid: dcc6dd4083f512a4f9fc7a58478c20db, type: 3}
   m_PrefabInstance: {fileID: 579330007}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &580975772
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 580975773}
+  - component: {fileID: 580975774}
+  m_Layer: 5
+  m_Name: Icon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &580975773
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 580975772}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 1035662339}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 697, y: -17}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &580975774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 580975772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64384b5d8aa14a0d8c84783fc462700c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  iconParent: {fileID: 580975773}
 --- !u!1001 &582480911
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7428,6 +7477,7 @@ GameObject:
   m_Component:
   - component: {fileID: 850947393}
   - component: {fileID: 850947394}
+  - component: {fileID: 850947395}
   m_Layer: 5
   m_Name: Sentence
   m_TagString: Untagged
@@ -7504,6 +7554,31 @@ MonoBehaviour:
   - We require quiet poetry to write true stories.
   - Accurate typing is not simply about speed.
   - They have been there before and will be there again.
+--- !u!114 &850947395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 850947392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05e609765c1b4eafacb5708cef4a17cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sentencePopup: {fileID: 850947394}
+  spellController: {fileID: 1900000003}
+  laneSpells:
+  - lane: {fileID: 910000031}
+    spell: {fileID: 11400000, guid: 8dbc961aba3946c2bc2f34b794b27897, type: 2}
+  - lane: {fileID: 910000032}
+    spell: {fileID: 11400000, guid: 8dbc961aba3946c2bc2f34b794b27897, type: 2}
+  - lane: {fileID: 910000033}
+    spell: {fileID: 11400000, guid: 8dbc961aba3946c2bc2f34b794b27897, type: 2}
+  - lane: {fileID: 910000034}
+    spell: {fileID: 11400000, guid: 8dbc961aba3946c2bc2f34b794b27897, type: 2}
+  - lane: {fileID: 910000035}
+    spell: {fileID: 11400000, guid: 8dbc961aba3946c2bc2f34b794b27897, type: 2}
 --- !u!1001 &866122668
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9104,6 +9179,7 @@ RectTransform:
   m_Children:
   - {fileID: 1830504230}
   - {fileID: 474433051}
+  - {fileID: 580975773}
   m_Father: {fileID: 1127019356}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -14815,6 +14891,7 @@ MonoBehaviour:
   spellOrigin: {fileID: 116786462}
   defaultSpell: {fileID: 11400000, guid: 8dbc961aba3946c2bc2f34b794b27897, type: 2}
   uiManager: {fileID: 371574342}
+  iconDisplay: {fileID: 580975774}
   spawnOffset: {x: 0, y: 0.65, z: 0.55}
 --- !u!114 &1900001000
 MonoBehaviour:
