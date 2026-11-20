@@ -16,8 +16,10 @@ public class Manager : MonoBehaviour
     
     void Update()
     {
+        /*
         if (Input.GetKeyDown(KeyCode.Tab))
             UIVisible();
+        */
 
         if (Input.GetKeyUp(KeyCode.Escape))
             ExitApplication();
