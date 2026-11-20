@@ -11219,7 +11219,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Cast this sentence to gain mana! You can't cast any spell during this time.
+  m_text: Cast this sentence for power untold! You can't cast any spell during this
+    time.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c2a21198f63ed417ebd20236840db6b2, type: 2}
   m_sharedMaterial: {fileID: -62081284080276878, guid: c2a21198f63ed417ebd20236840db6b2, type: 2}
