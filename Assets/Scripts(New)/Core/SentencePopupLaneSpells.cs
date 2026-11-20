@@ -52,17 +52,9 @@ public class SentencePopupLaneSpells : MonoBehaviour
                 continue;
             }
 
-            int cost = entry.spell.ManaCost;
-            int granted = (int)Math.Min(cost, (long)int.MaxValue - resources.Mana);
-            resources.SetMana(resources.Mana + granted);
-
-            bool cast = spellController.CastSpellWithTemporaryMana(entry.spell, entry.lane, granted);
+            bool cast = spellController.CastSpellWithoutManaCost(entry.spell, entry.lane);
             if (!cast)
                 Debug.LogWarning("Automatic spell \"" + entry.spell.name + "\" could not be cast in " + entry.lane.LaneName + ".", this);
-            long adjustment = !cast ? -granted
-                : entry.spell.Function == SpellFunction.Effect ? 0
-                : cost - granted;
-            resources.SetMana((int)Math.Min(int.MaxValue, Math.Max(0L, resources.Mana + adjustment)));
         }
     }
 }

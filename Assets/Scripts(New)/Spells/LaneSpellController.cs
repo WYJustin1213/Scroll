@@ -77,15 +77,15 @@ public class LaneSpellController : MonoBehaviour
 
     public bool CastSpell(SpellDefinition spell, LaneSpellPoint point)
     {
-        return CastSpellInternal(spell, point, 0);
+        return CastSpellInternal(spell, point, false);
     }
 
-    internal bool CastSpellWithTemporaryMana(SpellDefinition spell, LaneSpellPoint point, int temporaryMana)
+    internal bool CastSpellWithoutManaCost(SpellDefinition spell, LaneSpellPoint point)
     {
-        return CastSpellInternal(spell, point, temporaryMana);
+        return CastSpellInternal(spell, point, true);
     }
 
-    private bool CastSpellInternal(SpellDefinition spell, LaneSpellPoint point, int temporaryMana)
+    private bool CastSpellInternal(SpellDefinition spell, LaneSpellPoint point, bool freeCast)
     {
         if (spell == null)
         {
@@ -94,7 +94,7 @@ public class LaneSpellController : MonoBehaviour
         }
 
         if (!spell.Directional && spell.Function != SpellFunction.Effect)
-            return TryCast(spell, null, 0, Vector3.zero, temporaryMana);
+            return TryCast(spell, null, 0, Vector3.zero, freeCast);
 
         if (point == null ||
             point.Lane == null ||
@@ -109,7 +109,7 @@ public class LaneSpellController : MonoBehaviour
             point.Lane,
             0,
             spell.Directional ? point.SpellOrigin.position : Vector3.zero,
-            temporaryMana
+            freeCast
         );
     }
 
@@ -146,7 +146,7 @@ public class LaneSpellController : MonoBehaviour
         LaneManager lane,
         int firstTileIndex,
         Vector3 spawnPosition,
-        int temporaryMana = 0)
+        bool freeCast = false)
     {
         if (SentencePopup != null && SentencePopup.IsVisible)
             return false;
@@ -181,7 +181,7 @@ public class LaneSpellController : MonoBehaviour
             return false;
         }
 
-        if (playerResources.Mana < spell.ManaCost)
+        if (!freeCast && playerResources.Mana < spell.ManaCost)
         {
             Debug.LogWarning("Not enough mana to cast \"" + spell.name + "\".", this);
             audio.Play();
@@ -190,19 +190,8 @@ public class LaneSpellController : MonoBehaviour
 
         if (spell.Function == SpellFunction.Effect)
         {
-            if (temporaryMana < 0 || temporaryMana > playerResources.Mana)
-            {
-                Debug.LogError("Temporary spell mana is invalid.", this);
-                return false;
-            }
-
-            // Effect spells do not spend mana, so remove the credit before their mana gain.
-            playerResources.SetMana(playerResources.Mana - temporaryMana);
             if (!CastSap(spell, lane))
-            {
-                playerResources.SetMana((int)Math.Min(int.MaxValue, (long)playerResources.Mana + temporaryMana));
                 return false;
-            }
 
             NotifySpellCast(spell);
             return true;
@@ -251,7 +240,8 @@ public class LaneSpellController : MonoBehaviour
                 return false;
         }
 
-        playerResources.SetMana(playerResources.Mana - spell.ManaCost);
+        if (!freeCast)
+            playerResources.SetMana(playerResources.Mana - spell.ManaCost);
         nextCastTime = Time.time;
         /*
         if (uiManager != null)

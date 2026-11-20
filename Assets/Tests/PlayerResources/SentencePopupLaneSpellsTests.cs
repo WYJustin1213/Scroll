@@ -125,6 +125,28 @@ public class SentencePopupLaneSpellsTests
     }
 
     [Test]
+    public void AutomaticSpellsDoNotPublishTemporaryMana()
+    {
+        Call(resources, "SetMana", 14);
+        Set(popup, "manaReward", 0);
+        var observedMana = new List<int>();
+        Action changed = () => observedMana.Add(Mana);
+        EventInfo changedEvent = resources.GetType().GetEvent("Changed");
+        changedEvent.AddEventHandler(resources, changed);
+        try
+        {
+            Call(popup, "Submit", "Exact sentence.");
+            Assert.That(ProjectileCount(), Is.EqualTo(2));
+            Assert.That(Mana, Is.EqualTo(14));
+            Assert.That(observedMana, Is.Empty);
+        }
+        finally
+        {
+            changedEvent.RemoveEventHandler(resources, changed);
+        }
+    }
+
+    [Test]
     public void FailedCastRefundsTemporaryManaAndOtherLanesStillCast()
     {
         Set(firstPoint, "lane", null);
