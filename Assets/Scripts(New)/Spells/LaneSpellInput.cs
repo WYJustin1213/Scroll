@@ -21,6 +21,7 @@ public class LaneSpellInput : MonoBehaviour
 
     public TMP_InputField InputField => inputField != null ? inputField : GetComponent<TMP_InputField>();
     public SentencePopup SentencePopup { get; set; }
+    private AudioSource audio;
 
     private void Awake()
     {
@@ -31,6 +32,7 @@ public class LaneSpellInput : MonoBehaviour
         {
             lanes.AddRange(FindObjectsByType<LaneSpellPoint>(FindObjectsSortMode.None));
         }
+        audio = GetComponent<AudioSource>();
     }
 
     private void OnEnable()
@@ -88,6 +90,7 @@ public class LaneSpellInput : MonoBehaviour
 
         if (castOnSubmit && !TryCast(text, out bool matched) && !matched && !string.IsNullOrWhiteSpace(text))
             Debug.LogWarning("No spell matches \"" + text + "\".", this);
+            audio.Play();
     }
 
     private bool TryCast(string text, out bool matched)
